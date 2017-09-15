@@ -1,11 +1,12 @@
 <?php 
 //---------- Classe Candidat
-require_once 'Classe/element.php';
-require_once 'Classe/pluriel.php';
+require_once 'Modeles/element.php';
+require_once 'Modeles/pluriel.php';
 
 class Candidat extends Element{
-	
-private static $o_INSTANCES;
+
+	//Singleton de mémorisation des instances
+	private static $o_INSTANCES;
 	public static function ajouterObjet($ligne){
 		//créer (instancier) la liste si nécessaire
 		if (static::$o_INSTANCES ==null){static::$o_INSTANCES = new Candidats();}
@@ -13,7 +14,7 @@ private static $o_INSTANCES;
 		$tmp = static::$o_INSTANCES->getObject($ligne[static::champID()]);
 		if($tmp!=null){return $tmp;}
 		//n'existe pas : donc INSTANCIER Catégorie et mémoriser
-		$tmp = new Candidats($ligne);
+		$tmp = new Candidat($ligne);
 		static::$o_INSTANCES->doAddObject($tmp);
 		return $tmp;
 	}
@@ -37,40 +38,45 @@ private static $o_INSTANCES;
 		return static::ajouterObjet($ligne);
 	}
 	
-	private $o_MesCandidats;
+	private $o_MesProduits;
 	
-	
-	//---------- constructeur : 
-	public function __construct($ligne) 
-	{
-		parent::__construct($ligne);
-	}
+	//---------- constructeur : repose sur le constructeur parent
+	protected function __construct($theLigne) {parent::__construct($theLigne);}
 	
 	//---------- renvoie la valeur du champ spécifié en paramètre
 	public function getCId(){
 		return $this->getField('CId');
 	}
 	
-	public function getI_CIdBinome(){
+	public function getCIdBinome(){
 		return $this->getField('CIdBinome');
 	}
 	
-	public function getI_CNbV(){
+	public function getCNbV(){
 		return $this->getField('CNbV');
 	}
 	
-	
+	public function getCandidats(){
+		if($this->o_MesCandidats == null){
+			$this->o_MesCandidats = new Candidats();
+			$this->o_MesCandidatss->remplir('PDTCId="'.$this->getCId().'"',null);
+		}
+		return $this->o_MesCandidats;
+	}
 	
 	public function displayRow(){
 		
 		echo '<tr>';
 		echo '<td>'.$this->getCId().'</td>';
-		echo '<td>'.$this->getI_CIdBinome().'</td>';
-		echo '<td>'.$this->getI_CNbV().'</td>';
+		echo '<td>'.$this->getCIdBinome().'</td>';
+		echo '<td>'.$this->getCNbV().'</td>';
+		//$this->getCandidats()->displayTable();
+		echo '</td>';
 		echo '</tr>';
 	
 		
 	}
+	
 	
 
 	/******************************
@@ -101,11 +107,12 @@ class Candidats extends Pluriel{
 		}
 		
 		//echo $req;
+		
 		//remplir à partir de la requete
 		$curseur = SI::getSI()->SGBDgetPrepareExecute($req);
 		//var_dump($curseur);
 		foreach ($curseur as $uneLigne){
-			$this->doAddObject(new Candidat($uneLigne));
+			$this->doAddObject(Candidat::ajouterObjet($uneLigne));
 		}
 	}
 	
@@ -123,8 +130,8 @@ class Candidats extends Pluriel{
 	public function SELECT(){
 		echo'<select>';
 		// dire à chaque élément de mon tableau : afficher le row
-		foreach ($this->getArray() as $uncandid) {
-			$uncandid->option();
+		foreach ($this->getArray() as $uneCateg) {
+			$uneCateg->option();
 		}
 		echo '</select>';
 	}
