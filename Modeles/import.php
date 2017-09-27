@@ -2,7 +2,7 @@
 extract(filter_input_array(INPUT_POST));
 require_once 'si.php';
 //$MonBeauSI = SI::getSI();
-$db = new PDO('mysql:host=127.0.0.1;dbname=base','root','');
+$db = new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
 $fichier=$_FILES["userfile"]["name"];
 	if($fichier){ // ouverture du fichier temporaire
 		$fp = fopen($_FILES["userfile"]["tmp_name"], "r");
