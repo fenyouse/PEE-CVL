@@ -1,8 +1,8 @@
 <?php
 extract(filter_input_array(INPUT_POST));
-require_once 'si.php';
-//$MonBeauSI = SI::getSI();
+
 $db = new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
+
 $fichier=$_FILES["userfile"]["name"];
 	if($fichier){ // ouverture du fichier temporaire
 		$fp = fopen($_FILES["userfile"]["tmp_name"], "r");
@@ -44,12 +44,14 @@ $fichier=$_FILES["userfile"]["name"];
 			{
 				$cpt++;
 				
-				$sql = ("INSERT INTO elect( EId,ENom,EPrenom,EVote,EPwd,ELogin,EIdDivis,EDateLogin,EAdresseIP,ELastLogin,ESession,EDateLogout,EModif) VALUES('$champ2','$champ4','$champ5','','$champ8','$champ1','','','',0)");
-				$result = $db-> query($sql);
-				//$req ="INSERT INTO elect( EId,ENom,EPrenom,EVote,EPwd,ELogin,EIdDivis,EDateLogin,EAdresseIP,ELastLogin,ESession,EDateLogout,EModif) VALUES('$champ2','$champ4','$champ5','','$champ8','$champ1','','','',0)";
+
 				//SGBDgetPrepare($req);
 				//SGBDgetPrepareExecute($req);
 			}
+			$req =("INSERT INTO elect( EId,ENom,EPrenom,EPwd,ELogin,EIdDivis) VALUES('$champ2','$champ4','$champ5','$champ8','$champ7','$champ1')");
+			echo $req.'<br/>';
+			//$sql = ("INSERT INTO elect( EId,ENom,EPrenom,EVote,EPwd,ELogin,EIdDivis,EDateLogin,EAdresseIP,ELastLogin,ESession,EDateLogout,EModif) VALUES('$champ2','$champ4','$champ5','','$champ8','$champ1','','','',0)");
+			$result = $db-> query($req);
 		}
 		$ignore=false;
 	}
@@ -57,3 +59,4 @@ $fichier=$_FILES["userfile"]["name"];
 	fclose($fp);
 	?>
 	<h2>Nombre de valeurs nouvellement enregistrées:</h2><b><?php echo $cpt;?></b>
+
