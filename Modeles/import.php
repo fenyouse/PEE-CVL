@@ -7,6 +7,11 @@ $fichier=$_FILES["userfile"]["name"];
 	if($fichier){ // ouverture du fichier temporaire
 		$fp = fopen($_FILES["userfile"]["tmp_name"], "r");
 	}
+	$type_file = $_FILES["userfile"]["tmp_name"];
+	 if( !strstr($type_file, 'csv'))
+    {
+        exit("Le fichier n'est pas en csv, veuillez en importer un nouveau");
+    }
 	else{ //fichier inconnu?>
 		<p align="center" >- Importation echouee -</p>
 		<p align="center" ><B>Désolé, mais vous n'avez pas specifié de chemin valide...</B></p>
@@ -43,14 +48,10 @@ $fichier=$_FILES["userfile"]["name"];
 			if($champ1!='')
 			{
 				$cpt++;
-				
-
-				//SGBDgetPrepare($req);
-				//SGBDgetPrepareExecute($req);
 			}
 			$req =("INSERT INTO elect( EId,ENom,EPrenom,EPwd,ELogin,EIdDivis) VALUES('$champ2','$champ4','$champ5','$champ8','$champ7','$champ1')");
-			//echo $req.'<br/>';
-			//$sql = ("INSERT INTO elect( EId,ENom,EPrenom,EVote,EPwd,ELogin,EIdDivis,EDateLogin,EAdresseIP,ELastLogin,ESession,EDateLogout,EModif) VALUES('$champ2','$champ4','$champ5','','$champ8','$champ1','','','',0)");
+			echo $req.'<br/>';
+			
 			$result = $db-> query($req);
 		}
 		$ignore=false;
@@ -59,4 +60,3 @@ $fichier=$_FILES["userfile"]["name"];
 	fclose($fp);
 	?>
 	<h2>Nombre de valeurs nouvellement enregistrées:</h2><b><?php echo $cpt;?></b>
-
