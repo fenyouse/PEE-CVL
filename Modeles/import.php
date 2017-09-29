@@ -49,7 +49,7 @@ $fichier=$_FILES["userfile"]["name"];
 				//SGBDgetPrepareExecute($req);
 			}
 			$req =("INSERT INTO elect( EId,ENom,EPrenom,EPwd,ELogin,EIdDivis) VALUES('$champ2','$champ4','$champ5','$champ8','$champ7','$champ1')");
-			echo $req.'<br/>';
+			//echo $req.'<br/>';
 			//$sql = ("INSERT INTO elect( EId,ENom,EPrenom,EVote,EPwd,ELogin,EIdDivis,EDateLogin,EAdresseIP,ELastLogin,ESession,EDateLogout,EModif) VALUES('$champ2','$champ4','$champ5','','$champ8','$champ1','','','',0)");
 			$result = $db-> query($req);
 		}
