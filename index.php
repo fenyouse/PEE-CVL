@@ -24,7 +24,9 @@
   if ( $Page == "Accueil") {
     require_once 'Vues/AccueilNonConnecter.php';
   }
-
+  if ( $Page == "ChangeMdp") {
+    require_once 'Vues/ChangePassword.php';
+  }
   require_once 'Vues/footer.php';
 
 ?>
