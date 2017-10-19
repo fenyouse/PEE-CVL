@@ -7,6 +7,9 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>PPE-CVL</title>
 
+
+    <link href="css/MyCSS.css" rel="stylesheet">
+
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -18,3 +21,7 @@
     <![endif]-->
   </head>
   <body>
+    <center><h1>Site de vote de Gustave Eiffel</h1></center>
+
+
+<?php require_once 'Vues/menu.php'; ?>
