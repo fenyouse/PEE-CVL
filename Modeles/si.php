@@ -37,7 +37,7 @@ class SI {
 		$work->bindParam(1,$id);
 		$work->execute();
 		return $work->fetch();
-		
+
 	}
 }
 ?>

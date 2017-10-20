@@ -12,10 +12,10 @@
   if ( $Page == "Accueil") {
     /*
     if ($_SESSION['idUser']==null) {
-      require_once 'Vues/AccueilNonConnecter.php';
+      require_once 'Controleurs/ControleurAccueilNonConnecter.php';
     }else {
     */
-      require_once 'Vues/Accueil.php';
+      require_once 'Controleurs/ControleurAccueil.php';
     /*
     }
     */
