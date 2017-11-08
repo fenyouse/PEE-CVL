@@ -10,16 +10,8 @@ if(isset($_POST["login"],$_POST["mdp"])){
     }
 }
 
-  $Page ="";
 
-  if (isset($_GET["vu"])) {
-    $Page = $_GET["vu"];
-  }
-  if ( $Page == "Connexion") {
-    require_once 'Vues/Connexion.php';
-  }
-
-  if ( $Page == "Accueil") {
+  if(isset($_POST["Accueil"])) {
     /*
     if ($_SESSION['idUser']==null) {
       require_once 'Controleurs/ControleurAccueilNonConnecter.php';
@@ -29,11 +21,17 @@ if(isset($_POST["login"],$_POST["mdp"])){
     /*
     }
     */
+
   }
 
-  if ( $Page == "ChangeMdp") {
+  if(isset($_POST["Connexion"])) {
+    require_once 'Vues/Connexion.php';
+  }
+
+  if(isset($_POST["ChangeMdp"])) {
     require_once 'Vues/ChangePassword.php';
   }
+
   require_once 'Vues/footer.php';
 
 ?>

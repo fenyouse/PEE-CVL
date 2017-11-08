@@ -1,5 +1,8 @@
 <center>
-  <form method="post"> <button  class="btn btn-default" name="Acceuil" >Accueil</button ></form>
-  <a class="btn btn-default" href="index.php?vu=Connexion" role="button">Connexion</a>
-  <a class="btn btn-default" href="index.php?vu=ChangeMdp" role="button">ChangeMdp</a>
+  <form method="post">
+    <button  class="btn btn-default" name="Accueil" >Accueil</button >
+    <button  class="btn btn-default" name="Connexion" >Connexion</button >
+    <button  class="btn btn-default" name="ChangeMdp" >ChangeMdp</button >
+  </form>
+
 </center>
