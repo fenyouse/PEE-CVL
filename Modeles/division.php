@@ -53,7 +53,7 @@ class Division extends Element{
 	public function getDivisions(){
 		if($this->o_MesDivisions == null){
 			$this->o_MesDivisions = new Divisions();
-			$this->o_MesDivisions->remplir('PDTDCode="'.$this->getDCode().'"',null);
+			$this->o_MesDivisions->remplir('DCode="'.$this->getDCode().'"',null);
 		}
 		return $this->o_MesDivisions;
 	}

@@ -1,38 +1,38 @@
-<?php 
-//---------- Classe param
+<?ShS 
+//---------- Classe Suffrage
 require_once 'Modeles/element.php';
 require_once 'Modeles/pluriel.php';
 
-class Param extends Element{
+class Suffrage extends Element{
 
 	//Singleton de mémorisation des instances
 	private static $o_INSTANCES;
 	public static function ajouterObjet($ligne){
 		//créer (instancier) la liste si nécessaire
-		if (static::$o_INSTANCES ==null){static::$o_INSTANCES = new Params();}
+		if (static::$o_INSTANCES ==null){static::$o_INSTANCES = new Suffrages();}
 		//voir si l'objet existe avec la clef
-		$tmp = static::$o_INSTANCES->getObject($ligne[static::champID()]);
-		if($tmp!=null){return $tmp;}
-		//n'existe pas : donc INSTANCIER Param et mémoriser
-		$tmp = new Param($ligne);
-		static::$o_INSTANCES->doAddObject($tmp);
-		return $tmp;
+		$tmS = static::$o_INSTANCES->getObject($ligne[static::chamSID()]);
+		if($tmS!=null){return $tmS;}
+		//n'existe pas : donc INSTANCIER Suffrage et mémoriser
+		$tmS = new Suffrage($ligne);
+		static::$o_INSTANCES->doAddObject($tmS);
+		return $tmS;
 	}
 	
 	//publication liste instances
 	public static function getInstances(){
-		if (static::$o_INSTANCES ==null){static::$o_INSTANCES = new Params();}
+		if (static::$o_INSTANCES ==null){static::$o_INSTANCES = new Suffrages();}
 		return static::$o_INSTANCES;
 	}
 		
-	// doit impérativement trouver la Param ayant pour id le paramètre
+	// doit impérativement trouver la Suffrage ayant pour id le patamètre
 	public static function mustFind($id){
-		if (static::$o_INSTANCES == null){static::$o_INSTANCES = new Params();}
+		if (static::$o_INSTANCES == null){static::$o_INSTANCES = new Suffrages();}
 		// regarder si instance existe
-		$tmp = static::$o_INSTANCES->getObject($id);
-		if($tmp!=null) {return $tmp;}
+		$tmS = static::$o_INSTANCES->getObject($id);
+		if($tmS!=null) {return $tmS;}
 		//sinon pas trouver; chercher dans la BDD
-		$req = static::getSELECT().' where PChoix =?';
+		$req = static::getSELECT().' where SChoix =?';
 		echo "<br/>recherche $id";
 		$ligne = SI::getSI()->SGBDgetLigne($req, $id);
 		return static::ajouterObjet($ligne);
@@ -43,45 +43,50 @@ class Param extends Element{
 	//---------- constructeur : repose sur le constructeur parent
 	protected function __construct($theLigne) {parent::__construct($theLigne);}
 	
-	//---------- renvoie la valeur du champ spécifié en paramètre
-	public function getPChoix(){
-		return $this->getField('PChoix');
+	//---------- renvoie la valeur du champ spécifié en patamètre
+	public function getSChoix(){
+		return $this->getField('SChoix');
 	}
 	
-	public function getPDateDeb(){
-		return $this->getField('PDateDeb');
+	public function getSDateDeb(){
+		return $this->getField('SDateDeb');
 	}
 	
-	public function getPDateFin(){
-		return $this->getField('PDateFin');
+	public function getSDateFin(){
+		return $this->getField('SDateFin');
 	}
 	
-	public function getPBlancs(){
-		return $this->getField('PBlancs');
+	public function getSDescription(){
+		return $this->getField('SDescription');
 	}
 	
-	public function getPNuls(){
-		return $this->getField('PNuls');
+	public function getSBlancs(){
+		return $this->getField('SBlancs');
+	}
+	
+	public function getSNuls(){
+		return $this->getField('SNuls');
 	}
 	
 	
-	public function getParams(){
-		if($this->o_MesParams == null){
-			$this->o_MesParams = new Params();
-			$this->o_MesParams->remplir('PDTPChoix="'.$this->getPChoix().'"',null);
+	public function getSuffrages(){
+		if($this->o_MesSuffrages == null){
+			$this->o_MesSuffrages = new Suffrages();
+			$this->o_MesSuffrages->remplir('SChoix="'.$this->getSChoix().'"',null);
 		}
-		return $this->o_MesParams;
+		return $this->o_MesSuffrages;
 	}
 	
 	public function displayRow(){
 		
 		echo '<tr>';
-		echo '<td>'.$this->getPChoix().'</td>';
-		echo '<td>'.$this->getPDateDeb().'</td>';
-		echo '<td>'.$this->getPDateFin().'</td>';
-		echo '<td>'.$this->getPBlancs().'</td>';
-		echo '<td>'.$this->getPNuls().'</td>';
-		//$this->getParams()->displayTable();
+		echo '<td>'.$this->getSChoix().'</td>';
+		echo '<td>'.$this->getSDateDeb().'</td>';
+		echo '<td>'.$this->getSDateFin().'</td>';
+		echo '<td>'.$this->getSDescription().'</td>';
+		echo '<td>'.$this->getSBlancs().'</td>';
+		echo '<td>'.$this->getSNuls().'</td>';
+		//$this->getSuffrages()->disSlayTable();
 		echo '</td>';
 		echo '</tr>';
 	
@@ -91,24 +96,24 @@ class Param extends Element{
 	
 
 	/******************************
-	IMPORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
+	IMSORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
 
 	******************************/
-	public static function champID() {return 'PChoix';}
-	public static function getSELECT() {return 'SELECT PChoix,PDateDeb,PDateFin,PBlancs,PNuls FROM param';  }	
+	public static function chamSID() {return 'SChoix';}
+	public static function getSELECT() {return 'SELECT SChoix,SDateDeb,SDateFin,SDescription,SBlancs,SNuls FROM Suffrage';  }	
 
 
 }
 
-class Params extends Pluriel{
+class Suffrages extends Pluriel{
 
 	//constructeur
 	public function __construct(){
-		parent::__construct();
+		Parent::__construct();
 	}
 	
 	public function remplir($condition=null, $ordre=null) {
-		$req = Param::getSELECT();
+		$req = Suffrage::getSELECT();
 		//ajouter condition si besoin est
 		if ($condition != null) {
 			$req.= " WHERE $condition"; // remplace $condition car guillemet et pas simple quote
@@ -121,18 +126,18 @@ class Params extends Pluriel{
 		
 		//remplir à partir de la requete
 		$curseur = SI::getSI()->SGBDgetPrepareExecute($req);
-		//var_dump($curseur);
+		//var_dumS($curseur);
 		foreach ($curseur as $uneLigne){
-			$this->doAddObject(Param::ajouterObjet($uneLigne));
+			$this->doAddObject(Suffrage::ajouterObjet($uneLigne));
 		}
 	}
 	
 	public function displayTable(){
 		echo'<center>';
-		echo'<table border=1px>';
+		echo'<table border=1Sx>';
 		// dire à chaque élément de mon tableau : afficher le row
-		foreach ($this->getArray() as $unparam) {
-			$unparam->displayRow();
+		foreach ($this->getArray() as $unSuffrage) {
+			$unSuffrage->displayRow();
 		}
 		echo '</table>';
 		echo'</center>';
@@ -141,8 +146,8 @@ class Params extends Pluriel{
 	public function SELECT(){
 		echo'<select>';
 		// dire à chaque élément de mon tableau : afficher le row
-		foreach ($this->getArray() as $unparam) {
-			$unparam->option();
+		foreach ($this->getArray() as $unSuffrage) {
+			$unSuffrage->option();
 		}
 		echo '</select>';
 	}

@@ -96,7 +96,7 @@ class Electeur extends Element{
 	public function getElecteurs(){
 		if($this->o_MesElecteurs == null){
 			$this->o_MesElecteurs = new Electeurs();
-			$this->o_MesElecteurs->remplir('PDTEId="'.$this->getEId().'"',null);
+			$this->o_MesElecteurs->remplir('EId="'.$this->getEId().'"',null);
 		}
 		return $this->o_MesElecteurs;
 	}
