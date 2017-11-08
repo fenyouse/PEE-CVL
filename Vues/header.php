@@ -21,7 +21,12 @@
     <![endif]-->
   </head>
   <body>
-    <center><h1>Site de vote de Gustave Eiffel</h1></center>
+    <center>
+      <h1>Site de vote</h1>
+      <img src="img/LogoEiffel3.png" alt="img/LogoEiffel3.png" class="img-thumbnail">
+
+
+    </center>
 
 
 <?php require_once 'Vues/menu.php'; ?>

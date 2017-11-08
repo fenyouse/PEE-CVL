@@ -1,4 +1,5 @@
 <div id="changeMDP">
+  <h3>Changement de mot de passe</h3>
   <form class="form-horizontal">
     <div class="form-group">
       <label  for="InputLogin" class="col-sm-2 control-label">Login</label>

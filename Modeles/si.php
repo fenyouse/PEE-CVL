@@ -23,6 +23,15 @@ class SI {
 	}
 
 
+	function authentificationAdmin($login,$mdp){
+
+		$requete = "select count(*)from Admin where Alogin ='".$login."' and APwd = '".md5($mdp)."'";
+    $result = $theSI ->query($requete);
+    $authentification = $result->fetch(PDO::FETCH_NUM);
+
+    return $authentification[0];
+
+	}
 	function authentification($login,$mdp){
 		if (testMdpCrypte($login,$mdp)>6) {
 
