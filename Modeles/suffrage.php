@@ -72,7 +72,7 @@ class Suffrage extends Element{
 	public function getSuffrages(){
 		if($this->o_MesSuffrages == null){
 			$this->o_MesSuffrages = new Suffrages();
-			$this->o_MesSuffrages->remplir('SDTSChoix="'.$this->getSChoix().'"',null);
+			$this->o_MesSuffrages->remplir('SChoix="'.$this->getSChoix().'"',null);
 		}
 		return $this->o_MesSuffrages;
 	}
