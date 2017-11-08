@@ -1,4 +1,5 @@
 <?php
+  session_start();
   require_once 'Vues/header.php';
 
 	//référencer les classes utiles

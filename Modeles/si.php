@@ -14,6 +14,35 @@ class SI {
 		static::$theSI=$this; // memorisation au static
 	}
 
+	function testMdpCrypte ($login,$mdp){
+		$requete = "select EPwd from elect where Elogin ='".$login;
+		$result = $theSI ->query($requete);
+		$testCrypte = $result->fetch(PDO::FETCH_NUM);
+
+		return $testCrypte.sizeof();
+	}
+
+
+	function authentification($login,$mdp){
+		if (testMdpCrypte($login,$mdp)>6) {
+
+			$requete = "select count(*)from elect where Elogin ='".$login."' and EPwd = '".md5($mdp)."'";
+	    $result = $theSI ->query($requete);
+	    $authentification = $result->fetch(PDO::FETCH_NUM);
+
+	    return $authentification[0];
+
+		}else {
+
+			$requete = "select count(*)from elect where Elogin ='".$login."' and EPwd = '".$mdp."'";
+	    $result = $theSI ->query($requete);
+	    $authentification = $result->fetch(PDO::FETCH_NUM);
+
+	    return $authentification[0];
+		}
+
+}
+
 	//---------- renvoie le SI Singleton
 	public static function getSI() {
 		if (static::$theSI==null) {static::$theSI = new SI();}

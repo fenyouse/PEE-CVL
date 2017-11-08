@@ -1,5 +1,15 @@
 <?php
 
+
+if(isset($_POST["login"],$_POST["mdp"])){
+    $_SESSION['authe']= $MonBeauSI->authentification($_POST["login"],$_POST["mdp"]);
+
+}else{
+    if(!isset($_SESSION['authe'])){
+        $_SESSION['authe']=0;
+    }
+}
+
   $Page ="";
 
   if (isset($_GET["vu"])) {
