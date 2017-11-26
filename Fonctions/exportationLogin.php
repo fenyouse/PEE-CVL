@@ -16,8 +16,14 @@ $pdf->SetFillColor(96,96,96);
 $pdf->SetTextColor(255,255,255);
 $db_link =new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
 //liste des candidats générales
+//nouvelle méthode 
+//$TRAV = candid::SQLAffiche...;
+//echo json_encode($TRAV,JSON_PRETTY_PRINT);
+//
+//ancien méthode
 $req="SELECT EIdDivis,ENom,EPrenom,EPwd,ELogin FROM elect order by EIdDivis ;";
 $eleve = $db_link-> query($req);
+//
 
 $pdf->SetXY(2.5,4);
 //for($i=0;$i<sizeof($header);$i++)

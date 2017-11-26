@@ -1,7 +1,11 @@
 <?php
+require_once '../Modeles/si.php';
+require_once '../Modeles/candid.php';
 extract(filter_input_array(INPUT_POST));
 
-$db = new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
+//$db = new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
+
+
 $fichier=$_FILES["userfile"]["name"];
 $type_file = pathinfo($fichier,PATHINFO_EXTENSION);
 
@@ -27,7 +31,7 @@ if($type_file =="csv"){
 		$ligne =fgets($fp,4096);
 		
 		if (!$ignore) {
-			//oncrée un tableau des éléments séparés pas des points virgule
+			//on crée un tableau des éléments séparés pas des points virgule
 			$ligne = explode(";",$ligne);
 			$table = filter_input(INPUT_POST,'userfile');
 			//permier éléments
@@ -50,8 +54,13 @@ if($type_file =="csv"){
 			if($champ1!='')
 			{
 				$cpt++;
-				$req =("INSERT INTO elect( EId,ENom,EPrenom,ECodeINE,EPwd,ELogin,EIdDivis) VALUES('$champ2','$champ4','$champ5','$champ3','$champ8','$champ7','$champ1')");
-				$result = $db-> query($req);
+				//insertion liste élèves, nouvelle méthode
+				$TRAV = Admin::SQLInsert(array($champ2,$champ4,$champ5,$champ3,$champ8,$champ7,$champ1));
+				//echo json_encode($TRAV,JSON_PRETTY_PRINT);
+				
+				//test insertion liste élève dans bdd
+				//$req =("INSERT INTO elect( EId,ENom,EPrenom,ECodeINE,EPwd,ELogin,EIdDivis) VALUES('$champ2','$champ4','$champ5','$champ3','$champ8','$champ7','$champ1')");
+				//$result = $db-> query($req);
 			}
 			
 		

@@ -19,6 +19,7 @@ $db_link =new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
 //liste des candidats générales
 $req="SELECT SDateDeb,SDateFin,SDescription,SBlancs,SNuls FROM suffrage WHERE CURRENT_DATE()>SDateFin ORDER By SDateFin DESC LIMIT 1 ;";
 $eleve0 = $db_link-> query($req);
+//
 
 $pdf->SetXY(5,4);
 $pdf->cell(5,0.5,$header0[0],0,0,1);
@@ -65,9 +66,11 @@ $pdf->Cell(5, 1, utf8_decode('Résultats des candidats :'));
 $pdf->SetFillColor(96,96,96);
 $pdf->SetTextColor(255,255,255);
 $db_link =new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
+
 //liste des candidats générales
 $req="SELECT EIdDivis,ENom,EPrenom,CIdBinome,CNbV FROM elect,candid where candid.CId = elect.Elogin order by EIdDivis ;";
 $eleve = $db_link-> query($req);
+//
 
 $pdf->SetXY(3,10);
 for($i=0;$i<sizeof($header);$i++)
@@ -111,6 +114,7 @@ $db_link =new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
 //Elu et son binome
 $req2="SELECT EIdDivis,ENom,EPrenom,ECodeINE,MAX(CNbV),CIdBinome,EId FROM elect,candid where candid.CId = elect.Elogin order by ENom;";
 $eleve2 = $db_link-> query($req2);
+//
 
 $pdf->SetXY(3,22);
 for($i=0;$i<sizeof($header2);$i++)
@@ -138,6 +142,7 @@ while($row2=$eleve2->fetch())
 //binome
 $req3="SELECT EIdDivis,ENom,EPrenom,ECodeINE,EId FROM elect where ELogin = '".$binome."';";
 $eleve3 = $db_link-> query($req3);
+//
 
  while($row3=$eleve3->fetch())
   {
