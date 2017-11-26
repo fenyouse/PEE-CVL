@@ -1,34 +1,33 @@
 ﻿<?php  
 // masque les messages erreurs
 ini_set("display_errors",0);error_reporting(0);
-//$MonBeauSI = SI::getSI();
+
 ?>
-<html lang="fr">
-	<head>
-	<meta charset="utf-8" />
-	<title>Compte Technicien</title>
-</head>
-<body>
+
+ 
 <center>
-<h3> Veuillez choisir un fichier *.csv : </h3>
-<form method="post" enctype="multipart/form-data" action="../Modeles/importlisteEleve.php">
-<input name="userfile" type="file" value="table" />
-<input name="submit" type="submit" value="Importer" /></form>
+<div class="well center-block" style="max-width:400px;margin-top:100px">
 
-<h3>Exportation des Résultats du suffrage : </h3>
-<!--<p>Selection du suffrage :</p>-->
-<?php
-// require_once '../Modeles/suffrage.php';
-// $lesSuffrages = new Suffrages();
-// $lesSuffrages ->remplir();
-// Suffrage::getInstances()->displaySelect();
-?>
-<form method="post" action="../Modeles/exportationResultats.php">
-<input name="submit" type="submit" value="Exporter" /></form>
+<h4>Importation de la Liste des élèves : </h4>
+<p> Veuillez choisir un fichier *.csv : </p>
 
-<h3>Exportation des Login des étudiants : </h3>
-<form method="post" action="../Modeles/exportationLogin.php">
-<input name="submit" type="submit" value="Exporter" /></form>
+<form  method="post" enctype="multipart/form-data" action="../index.php">
+<input style="padding-bottom:40px" class="form-control" name="userfile" type="file" value="table" />
+<input class="btn btn-default btn-lg btn-block" name="Importer" type="submit" value="Importer" /></form>
+<br></br>
+
+<h4>Exportation des Résultats du suffrage : </h4>
+<form  method="post" action="../index.php">
+<input class="btn btn-default btn-lg btn-block"  name="submitRes" type="submit" value="Exporter" /></form>
+<br></br>
+
+<h4>Exportation des Login des étudiants : </h4>
+<form  method="post" action="../index.php">
+<input class="btn btn-default btn-lg btn-block" name="submitLog" type="submit" value="Exporter" /></form>
+<br></br>
+
+<button class="btn btn-default btn-lg btn-block" type="submit" name="submitAdmin" class="btn btn-default"> Gestion des Administrateurs </button>
+
+</div>
 </center>
-</body>
-</html>
+
