@@ -1,9 +1,10 @@
-<center>
+<div class="well center-block" id="connexionform">
+
   <form class="form-inline" method="post">
     <h3>Connexion Admin</h3>
     <div class="form-group">
       <label class="sr-only" for="InputLogin">Login</label>
-      <input type="text" class="form-control" id="loginAmdin" placeholder="Login">
+      <input type="text" class="form-control" id="loginAdmin" placeholder="Login">
     </div>
     <div class="form-group">
       <label class="sr-only" for="InputPassword">Mot de passe</label>
@@ -12,4 +13,4 @@
 
     <button type="submit" class="btn btn-default">Connecter</button>
   </form>
-</center>
+</div>

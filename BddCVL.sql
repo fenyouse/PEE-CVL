@@ -41,7 +41,7 @@ CREATE TABLE suffrage (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE Admin(
+CREATE TABLE admin(
   ALogin varchar(20) NOT NULL,
   APwd varchar(50) NOT NULL,
   ADroit varchar(4) NOT NULL,

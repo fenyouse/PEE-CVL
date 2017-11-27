@@ -1,24 +1,5 @@
 <?php
 
-
-  if(isset($_POST["login"],$_POST["mdp"])){
-      $_SESSION['authe']= $MonBeauSI->authentification($_POST["login"],$_POST["mdp"]);
-
-  }else{
-      if(!isset($_SESSION['authe'])){
-          $_SESSION['authe']=0;
-      }
-  }
-
-  if(isset($_POST["loginAdmin"],$_POST["mdpAdmin"])){
-      $_SESSION['authe']= $MonBeauSI->authentificationAdmin($_POST["loginAdmin"],$_POST["mdpAdmin"]);
-
-  }else{
-      if(!isset($_SESSION['authe'])){
-          $_SESSION['authe']=0;
-      }
-  }
-
   if(isset($_POST["Accueil"])) {
     /*
     if ($_SESSION['idUser']==null) {
@@ -31,17 +12,25 @@
     */
   }
 
-  if(isset($_POST["Connexion"])) {
+  if (!isset($_SESSION['Menu'])) {
+    $_SESSION['Menu']="";
+  }
+
+  if($_SESSION['Menu']=="MenuCo"||(isset($_POST["Connexion"]))) {
+    //$_SESSION['Menu'] = "MenuCo";
     require_once 'Vues/MenuCo.php';
   }
-  if(isset($_POST["ConnexionAdmin"])) {
-    require_once 'Vues/ConnexionAdmin.php';
+  if(isset($_POST["ConnexionAdmin"])||$_SESSION['Menu']=="CoAdmin") {
+    $_SESSION['Menu'] = "CoAdmin";
+    require_once 'Controleurs/ControleurCoAdmin.php';
   }
-  if(isset($_POST["ConnexionEleve"])) {
-    require_once 'Vues/ConnexionEleve.php';
+  if(isset($_POST["ConnexionEleve"])||$_SESSION['Menu']=="CoEleve") {
+    $_SESSION['Menu'] = "CoEleve";
+    require_once 'Controleurs/ControleurCoEleve.php';
   }
-  if(isset($_POST["ChangeMdp"])) {
-    require_once 'Vues/ChangePassword.php';
+  if(isset($_POST["ChangeMdp"])||$_SESSION['Menu']=="ChangeMdp") {
+    $_SESSION['Menu'] = "ChangeMdp";
+    require_once 'Controleurs/ControleurChangeMdp.php';
   }
 
   require_once 'Vues/footer.php';

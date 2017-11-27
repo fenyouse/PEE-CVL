@@ -8,7 +8,7 @@
     <title>PPE-CVL</title>
 
 
-    <link href="css/MyCSS.css" rel="stylesheet">
+
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -19,8 +19,9 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <link href="css/MyCSS.css" rel="stylesheet">
   </head>
-  <body>
+  <body background="img/background.jpg">
     <center>
       <h1>Site de vote</h1>
       <img src="img/LogoEiffel3.png" alt="img/LogoEiffel3.png" class="img-thumbnail">

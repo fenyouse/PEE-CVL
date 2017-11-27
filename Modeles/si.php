@@ -14,7 +14,10 @@ class SI {
 		static::$theSI=$this; // memorisation au static
 	}
 
-	function testMdpCrypte ($login,$mdp){
+	//----------------------------------------------
+	//                      ELEVES
+	//----------------------------------------------
+	public function TestMdpCrypte ($login,$mdp){
 		$requete = "select EPwd from elect where Elogin ='".$login;
 		$result = $theSI ->query($requete);
 		$testCrypte = $result->fetch(PDO::FETCH_NUM);
@@ -22,18 +25,9 @@ class SI {
 		return $testCrypte.sizeof();
 	}
 
-
-	function authentificationAdmin($login,$mdp){
-
-		$requete = "select count(*)from Admin where Alogin ='".$login."' and APwd = '".md5($mdp)."'";
-    $result = $theSI ->query($requete);
-    $authentification = $result->fetch(PDO::FETCH_NUM);
-
-    return $authentification[0];
-
-	}
-	function authentification($login,$mdp){
-		if (testMdpCrypte($login,$mdp)>6) {
+	public function AuthentificationEleve($login,$mdp){
+		//vérifier que l'eleve n'a pas voté et n'est pas deja connecté sinon renvoie 0
+		if ($this->testMdpCrypte($login,$mdp)>6) {
 
 			$requete = "select count(*)from elect where Elogin ='".$login."' and EPwd = '".md5($mdp)."'";
 	    $result = $theSI ->query($requete);
@@ -49,8 +43,73 @@ class SI {
 
 	    return $authentification[0];
 		}
+	}
 
-}
+	public function IdentificationEleve($login,$mdp){
+		$requete = "select * from elect where Elogin ='".$login."'and EPwd = '".md5($mdp)."'";
+	  $result = $theSI ->query($requete);
+	  $Identification = $result->fetch(PDO::FETCH_NUM);
+
+	  return $Identification[0];
+	}
+
+	public function PostDateCoEleve($login){
+		$date = Now();
+		$requete = "INSERT INTO elect (EDateLogin, ELastLogin) VALUES ('".$date."', '".$date."')";
+		$result = $this->SGBDgetPrepareExecute($requete);
+
+		return $result;
+	}
+
+	public function UpdatePassword($login,$mdp){
+		$requete = "UPDATE elect SET EPwd= '".md5($mdp)."' WHERE ELogin ='".$login."' ";
+		$result = $this->SGBDgetPrepareExecute($requete);
+
+		return $result;
+	}
+
+	//----------------------------------------------
+	//                  CPE + TECH
+	//----------------------------------------------
+
+	public function AuthentificationAdmin($login,$mdp){
+
+		$requete = "select count(*)from admin where ALogin ='".$login."' and APwd = '".md5($mdp)."'";
+    $result = $theSI ->query($requete);
+    $authentification = $result->fetch(PDO::FETCH_NUM);
+
+    return $authentification[0];
+
+	}
+
+	public function IdentificationAdmin($login,$mdp){
+		$requete = "select * from admin where ALogin ='".$login."'and APwd = '".md5($mdp)."'";
+	  $result = $theSI ->query($requete);
+	  $Identification = $result->fetch(PDO::FETCH_NUM);
+
+	  return $Identification[0];
+	}
+
+	public function GetDroitAdmin($login){
+		$requete = "select ADroit from admin where Alogin ='".$login."'";
+    $result = $theSI ->query($requete);
+    $DroitAdmin = $result->fetch(PDO::FETCH_NUM);
+
+    return $DroitAdmin[0];
+	}
+
+	public function PostDateCoAdmin($login){
+		$date = Now();
+		$requete = "INSERT INTO admin (ADateLogin, ALastLogin) VALUES ('".$date."', '".$date."')";
+		$tmp = $this->SGBDgetPrepareExecute($requete);
+
+	}
+
+
+
+
+
+
 
 	//---------- renvoie le SI Singleton
 	public static function getSI() {

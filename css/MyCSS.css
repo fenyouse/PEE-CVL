@@ -1,7 +1,11 @@
 #changeMDP{
-  margin:10% 0% 10% 20%;
+  width: 400px;
 
 }
 #MenuCo{
   width: 30%;
+
+}
+#connexionform{
+  width: 500px;
 }
