@@ -1,6 +1,7 @@
 <?php
 
   if(isset($_POST["Accueil"])) {
+    $_SESSION['Menu']="";
     /*
     if ($_SESSION['idUser']==null) {
       require_once 'Controleurs/ControleurAccueilNonConnecter.php';
@@ -16,19 +17,37 @@
     $_SESSION['Menu']="";
   }
 
-  if($_SESSION['Menu']=="MenuCo"||(isset($_POST["Connexion"]))) {
+  switch ($_SESSION['Menu']) {
+    case "MenuCo":
+        //$_SESSION['Menu'] = "MenuCo";
+        require_once 'Vues/MenuCo.php';
+        break;
+    case "CoAdmin":
+        $_SESSION['Menu'] = "CoAdmin";
+        require_once 'Controleurs/ControleurCoAdmin.php';
+        break;
+    case "CoEleve":
+        $_SESSION['Menu'] = "CoEleve";
+        require_once 'Controleurs/ControleurCoEleve.php';
+        break;
+    case "ChangeMdp":
+        $_SESSION['Menu'] = "ChangeMdp";
+        require_once 'Controleurs/ControleurChangeMdp.php';
+        break;
+}
+  if(isset($_POST["Connexion"])) {
     //$_SESSION['Menu'] = "MenuCo";
     require_once 'Vues/MenuCo.php';
   }
-  if(isset($_POST["ConnexionAdmin"])||$_SESSION['Menu']=="CoAdmin") {
+  if(isset($_POST["ConnexionAdmin"])){
     $_SESSION['Menu'] = "CoAdmin";
     require_once 'Controleurs/ControleurCoAdmin.php';
   }
-  if(isset($_POST["ConnexionEleve"])||$_SESSION['Menu']=="CoEleve") {
+  if(isset($_POST["ConnexionEleve"])){
     $_SESSION['Menu'] = "CoEleve";
     require_once 'Controleurs/ControleurCoEleve.php';
   }
-  if(isset($_POST["ChangeMdp"])||$_SESSION['Menu']=="ChangeMdp") {
+  if(isset($_POST["ChangeMdp"])) {
     $_SESSION['Menu'] = "ChangeMdp";
     require_once 'Controleurs/ControleurChangeMdp.php';
   }
