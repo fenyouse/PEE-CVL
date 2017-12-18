@@ -9,11 +9,19 @@ if(isset($_POST['login'])){
 
 if(isset($_POST) && !empty($_POST['login']) && !empty($_POST['mdp'])){
 
-  $_SESSION['InfoEleve']=Electeur::AuthentificationEleve($_POST["login"],$_POST["mdp"]);
-  if ($_SESSION['InfoEleve']!='') {
-    $_SESSION['Menu'] = "ChangeMdp";
-    header ('Location:index.php');
+  $ElecteurTmp = Electeur::AuthentificationEleve($_POST["login"],$_POST["mdp"]);
+  if ($ElecteurTmp!=null) {
+      $_SESSION['InfoEleve'] = $ElecteurTmp->getEId();
+
+      $electeur= Electeur::mustFind( Electeur::AuthentificationEleve($_POST["login"],$_POST["mdp"])->getEId());
+      //var_dump($electeur);
+      if ($electeur!=null) {
+        $_SESSION['Menu'] = "ChangeMdp";
+        header ('Location:index.php');
+      }
   }
+
+
 
 }
 
