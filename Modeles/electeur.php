@@ -97,7 +97,7 @@ class Electeur extends Element{
 		}
 		return $this->o_MesElecteurs;
 	}
-
+	//renvoie true si le mot de passe est cryptée
 	public static function TestMdpCrypte ($login){
 
 		$requete =static::getSELECT()." where ELogin ='".$login."'";
@@ -105,17 +105,17 @@ class Electeur extends Element{
 		//var_dump($ligne);
 		$result = strlen($ligne['EPwd']);
 		//var_dump($result);
-		return $result<6;
+		return $result>6;
 	}
 
 	public static function AuthentificationEleve($login,$mdp){
 
 		//vérifier que l'eleve n'a pas voté et n'est pas deja connecté sinon renvoie null
 		if (static::TestMdpCrypte($login)) {
-			$requete =static::getSELECT()." where ELogin ='".$login."'and EPwd = '".$mdp."'";
+			$requete =static::getSELECT()." where ELogin ='".$login."'and EPwd = '".md5($mdp)."'";
 
 		}else {
-			$requete = static::getSELECT()." where Elogin ='".$login."'and EPwd = '".md5($mdp)."'";
+			$requete = static::getSELECT()." where Elogin ='".$login."'and EPwd = '".$mdp."'";
 
 		}
 		$ligne = SI::getSI()->SGBDgetuneLigne($requete);
@@ -151,9 +151,19 @@ class Electeur extends Element{
 
 
 	//à tester
-	public function UpdatePassword($login,$mdp){
-		$requete = "UPDATE elect SET EPwd= '".md5($mdp)."' WHERE ELogin ='".$login."' ";
-		$result = SI::getSI()->SGBDgetPrepareExecute($requete);
+	public static function UpdatePassword($login,$oldMdp,$newMdp){
+		if (static::TestMdpCrypte($login)) {
+			$valeurs = array(md5($newMdp),$login,md5($oldMdp));
+			var_dump($valeurs);
+			$requete = "UPDATE elect SET EPwd= ? WHERE ELogin =? AND EPwd=?";
+			$result = SI::getSI()->SGBDexecuteQuery($requete,$valeurs);
+		}else {
+			$valeurs = array(md5($newMdp),$login,$oldMdp);
+			var_dump($valeurs);
+			$requete = "UPDATE elect SET EPwd= ? WHERE ELogin =? AND EPwd=?";
+			$result = SI::getSI()->SGBDexecuteQuery($requete,$valeurs);
+		}
+
 
 		return $result;
 	}
