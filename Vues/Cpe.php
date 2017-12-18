@@ -1,11 +1,77 @@
 ﻿
 
+<script>
+// instanciation objet pour appeler le serveur
+function makeHttpr() {
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+// code for IE7+, Firefox, Chrome, Opera, Safari
+	   xmlhttp = new XMLHttpRequest();
+	} else {// code for IE6, IE5
+	   xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	return xmlhttp;
+}
 
+function appelAjaxGet(chaineGet) {
+	var xHttp;
+	xHttp = makeHttpr() ;
+	xHttp.onreadystatechange=function()  {
+		if (xHttp.readyState==4 && xHttp.status==200) {
+			traiterRetour(xHttp.responseText);
+		}
+	}
+	xHttp.open("GET", chaineGet, true);
+	xHttp.send();
+}
+
+function appelAjaxPost() {
+	var xHttp;
+	xHttp = makeHttpr() ;
+	xHttp.onreadystatechange=function()  {
+		if (xHttp.readyState==4 && xHttp.status==200) {
+			traiterRetour(xHttp.responseText);
+		}
+	}
+	xHttp.open("POST", "ajax_test.asp", true);
+	xHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xHttp.send("fname=Pascal&lname=Giorgi");
+}
+
+function traiterRetour(flot) {
+	//alert(repon) ;
+	var oDiv = document.getElementById("details");
+	oDiv.innerHTML = flot;
+}
+function demanderDetails(objSelect) {
+	//alert(objSelect.value);
+	var oDiv = document.getElementById("details");
+	oDiv.innerHTML = "veuillez patienter SVP ...";
+    appelAjaxGet("Fonctions/repondeurCPE.php?idsuff="+objSelect.value);
+}
+</script>
 <center>
 <div class="well center-block" style="max-width:500px;margin-top:100px">
 
-		<form method="post" class="form-inline" action="../index.php">
+		<form method="post" class="form-inline" action="index.php">
 		
+			<h4>Ajouter un Candidat : </h4>
+			<br></br>
+			<p> Selectionner l'élection à laquelle ils participent : </p>
+			<?php  
+			$lessuffrages = new Suffrages();
+			$lessuffrages->remplir();
+			Suffrage::getInstances()->displaySelect();
+			?>
+			<div class="well center-block" style="max-width:500px;margin-top:50px" id="details">
+			</div>
+			<input type="text" class="form-control" name="IdCand" id="CId" placeholder="Id du candidat">
+		
+			<input type="text" class="form-control" name="IdBin" id="idBinome" placeholder="Id de son binôme">
+			<br></br>
+			
+			<input class="btn btn-default btn-lg btn-block" type="submit" value="Valider" name="Validercandidat"class="bouton" />
+			<br></br>
 			
 			<h4>Création d'une élection : </h4>
 			<br></br>

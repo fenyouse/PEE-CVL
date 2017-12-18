@@ -30,7 +30,7 @@ class Electeur extends Element{
 		if($tmp!=null) {return $tmp;}
 		//sinon pas trouver; chercher dans la BDD
 		$req = static::getSELECT().' where EId =?';
-		echo "<br/>recherche $id";
+		//echo "<br/>recherche $id";
 		$ligne = SI::getSI()->SGBDgetLigne($req, $id);
 		return static::ajouterObjet($ligne);
 	}

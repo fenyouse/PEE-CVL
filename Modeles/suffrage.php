@@ -32,7 +32,7 @@ class Suffrage extends Element{
 		if($tmp!=null) {return $tmp;}
 		//sinon pas trouver; chercher dans la BDD
 		$req = static::getSELECT().' where 	SId =?';
-		echo "<br/>recherche $id";
+		//&echo "<br/>recherche $id";
 		$ligne = SI::getSI()->SGBDgetLigne($req, $id);
 		return static::ajouterObjet($ligne);
 	}
@@ -84,12 +84,9 @@ class Suffrage extends Element{
 	public function displayRow(){
 		
 		echo '<tr>';
-		echo '<td>'.$this->getSChoix().'</td>';
 		echo '<td>'.$this->getSDateDeb().'</td>';
 		echo '<td>'.$this->getSDateFin().'</td>';
 		echo '<td>'.$this->getSDescription().'</td>';
-		echo '<td>'.$this->getSBlancs().'</td>';
-		echo '<td>'.$this->getSNuls().'</td>';
 		echo '</td>';
 		echo '</tr>';
 	}
@@ -100,7 +97,7 @@ class Suffrage extends Element{
 	IMSORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
 
 	******************************/
-	public static function chamSID() {return 'SId';}
+	public static function champID() {return 'SId';}
 	public static function getSELECT() {return 'SELECT SId,SChoix,SDateDeb,SDateFin,SDescription,SBlancs,SNuls FROM suffrage';  }	
 
 
@@ -108,13 +105,21 @@ class Suffrage extends Element{
 		$req = 'INSERT INTO suffrage (SChoix,SDateDeb,SDateFin,SDescription) VALUES(?,?,?,?)';
 		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
 	}
+
+	public function displayOption() {
+		$tmp = $this->getSId();
+		echo '<option value="'.$tmp.'">';
+		echo $this->getSDescription();
+		echo '</option>';
+		
+	}
 }
 
 class Suffrages extends Pluriel{
 
 	//constructeur
 	public function __construct(){
-		Parent::__construct();
+		parent::__construct();
 	}
 	
 	public function remplir($condition=null, $ordre=null) {
@@ -139,7 +144,12 @@ class Suffrages extends Pluriel{
 	
 	public function displayTable(){
 		echo'<center>';
-		echo'<table border=1Sx>';
+		echo'<table class="table" border=1Sx>';
+		echo'<tr>';
+		echo'<th> Date de debut </th>';
+		echo'<th> Date de fin </th>';
+		echo'<th> Description </th>';
+		echo'</tr>';
 		// dire à chaque élément de mon tableau : afficher le row
 		foreach ($this->getArray() as $unSuffrage) {
 			$unSuffrage->displayRow();
@@ -148,14 +158,18 @@ class Suffrages extends Pluriel{
 		echo'</center>';
 	}
 	
-	public function SELECT(){
-		echo'<select>';
-		// dire à chaque élément de mon tableau : afficher le row
-		foreach ($this->getArray() as $unSuffrage) {
-			$unSuffrage->option();
-		}
-		echo '</select>';
+	public function displaySelect() {
+		echo '<select name="selection" onChange="demanderDetails(this);">';
+		// dire à chaque élément de mon tableau : Afficher le Row
+		foreach ($this->getArray() as $unsuffrage) {
+			$unsuffrage->displayOption();
+		} 
+		echo '</select>';		
 	}
+	
+	
+
+	
 	
 }
 ?>
