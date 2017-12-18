@@ -115,7 +115,7 @@ class Electeur extends Element{
 			$requete =static::getSELECT()." where ELogin ='".$login."'and EPwd = '".md5($mdp)."'";
 
 		}else {
-			$requete = static::getSELECT()." where Elogin ='".$login."'and EPwd = '".$mdp."'";
+			$requete = static::getSELECT()." where ELogin ='".$login."'and EPwd = '".$mdp."'";
 
 		}
 		$ligne = SI::getSI()->SGBDgetuneLigne($requete);

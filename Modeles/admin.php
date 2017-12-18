@@ -5,35 +5,6 @@
 //                  CPE + TECH
 //----------------------------------------------
 
-
-public static function IdentificationAdmin($login,$mdp){
-	$requete = "SELECT * from admin where ALogin ='".$login."'and APwd = '".md5($mdp)."'";
-
-	$result = $theSI::getSI()->query($requete);
-	$Identification = $result->fetch(PDO::FETCH_NUM);
-
-	return $Identification[0];
-}
-
-public function GetDroitAdmin($login){
-	$requete = "SELECT ADroit from admin where Alogin ='".$login."'";
-	$result = $theSI ->query($requete);
-	$DroitAdmin = $result->fetch(PDO::FETCH_NUM);
-
-	return $DroitAdmin[0];
-}
-
-public function PostDateCoAdmin($login){
-	$date = Now();
-	$requete = "INSERT INTO admin (ADateLogin, ALastLogin) VALUES ('".$date."', '".$date."')";
-	$tmp = $this->SGBDgetPrepareExecute($requete);
-
-}
-
-
-
-
-
 class Admin extends Element{
 
 	//Singleton de mémorisation des instances
@@ -78,6 +49,9 @@ class Admin extends Element{
 		return $this->getField('ALogin');
 	}
 
+	public function getAId(){
+		return $this->getField('AId');
+	}
 	public function getAPwd(){
 		return $this->getField('APwd');
 	}
@@ -86,6 +60,35 @@ class Admin extends Element{
 		return $this->getField('ADroit');
 	}
 
+	//renvoie true si le mot de passe est cryptée
+	public static function TestMdpCrypte ($login){
+
+		$requete =static::getSELECT()." where ALogin ='".$login."'";
+		$ligne = SI::getSI()->SGBDgetuneLigne($requete);
+		//var_dump($ligne);
+		$result = strlen($ligne['APwd']);
+		//var_dump($result);
+		return $result>6;
+	}
+
+	public static function AuthentificationAdmin($login,$mdp){
+
+		//vérifier que l'eleve n'a pas voté et n'est pas deja connecté sinon renvoie null
+		if (static::TestMdpCrypte($login)) {
+			$requete =static::getSELECT()." where ALogin ='".$login."'and APwd = '".md5($mdp)."'";
+
+		}else {
+			$requete = static::getSELECT()." where ALogin ='".$login."'and APwd = '".$mdp."'";
+
+		}
+		$ligne = SI::getSI()->SGBDgetuneLigne($requete);
+		if($ligne == null){return null;}
+
+		$admin = static::ajouterObjet($ligne);
+
+		return $admin;
+
+	}
 
 	public function displayRow(){
 

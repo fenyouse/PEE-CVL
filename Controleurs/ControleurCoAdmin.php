@@ -1,14 +1,47 @@
 <?php
 
-if(isset($_POST["loginAdmin"],$_POST["mdpAdmin"])){
-    $_SESSION['authe']= $MonBeauSI->AuthentificationAdmin($_POST["loginAdmin"],$_POST["mdpAdmin"]);
-    echo '<script type="text/javascript">windows.alert("'.$_SESSION['authe'].'");</script>';
-}else{
-    $_SESSION['authe']=0;
-    echo '<script type="text/javascript">windows.alert("'.$_SESSION['authe'].'");</script>';
+
+require_once 'Modeles/admin.php';
+
+$erreur = "";
+
+if(isset($_POST['loginAdmin'])){
+  $erreur="formulaire vide";
 }
 
-require_once 'Vues/ConnexionAdmin.php';
+if(isset($_POST) && !empty($_POST['loginAdmin']) && !empty($_POST['mdpAdmin'])){
+
+  $AdminTmp = Admin::AuthentificationAdmin($_POST["loginAdmin"],$_POST["mdpAdmin"]);
+  if ($AdminTmp!=null) {
+      $_SESSION['InfoAdmin'] = $AdminTmp->getAId();
+
+      $admin= Admin::mustFind( Admin::AuthentificationAdmin($_POST["loginAdmin"],$_POST["mdpAdmin"])->getAId());
+      //var_dump($electeur);
+      if ($admin!=null) {
+        $login = $admin->getALogin();
+        if (!Admin::TestMdpCrypte($login)){
+          $_SESSION['Menu'] = "ChangeMdp";
+          header ('Location:index.php');
+        }else {
+          if ($admin->getADroit()=='TECH') {
+            $_SESSION['Menu'] = "AccueilTECH";
+            header ('Location:index.php');
+          }else {
+            $_SESSION['Menu'] = "AccueilCPE";
+            header ('Location:index.php');
+          }
+
+        }
+
+      }
+  }
+
+}
 
 
- ?>
+
+
+
+
+
+require_once 'Vues/ConnexionAdmin.php';?>

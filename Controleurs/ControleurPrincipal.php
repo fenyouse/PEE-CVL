@@ -42,6 +42,15 @@ require_once 'Modeles/pluriel.php';
     case "Accueil":
         require_once 'Controleurs/ControleurAccueil.php';
         break;
+    case "AccueilCPE":
+            require_once 'Controleurs/ControleurAccueilAdmin.php';
+            break;
+    case "AccueilCPE":
+            require_once 'Controleurs/ControleurCPE.php';
+            break;
+    case "AccueilTECH":
+            require_once 'Controleurs/ControleurTECH.php';
+            break;
 }
   if(isset($_POST["Connexion"])) {
     //$_SESSION['Menu'] = "MenuCo";
