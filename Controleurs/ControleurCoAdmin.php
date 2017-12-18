@@ -18,11 +18,13 @@ if(isset($_POST) && !empty($_POST['loginAdmin']) && !empty($_POST['mdpAdmin'])){
       $admin= Admin::mustFind( Admin::AuthentificationAdmin($_POST["loginAdmin"],$_POST["mdpAdmin"])->getAId());
       //var_dump($electeur);
       if ($admin!=null) {
+        /*
         $login = $admin->getALogin();
         if (!Admin::TestMdpCrypte($login)){
           $_SESSION['Menu'] = "ChangeMdp";
           header ('Location:index.php');
         }else {
+          */
           if ($admin->getADroit()=='TECH') {
             $_SESSION['Menu'] = "AccueilTECH";
             header ('Location:index.php');
@@ -33,7 +35,7 @@ if(isset($_POST) && !empty($_POST['loginAdmin']) && !empty($_POST['mdpAdmin'])){
 
         }
 
-      }
+    //  }
   }
 
 }

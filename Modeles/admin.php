@@ -34,7 +34,7 @@ class Admin extends Element{
 		$tmp = static::$o_INSTANCES->getObject($id);
 		if($tmp!=null) {return $tmp;}
 		//sinon pas trouver; chercher dans la BDD
-		$req = static::getSELECT().' where ALogin =?';
+		$req = static::getSELECT().' where AId =?';
 		//echo "<br/>recherche $id";
 		$ligne = SI::getSI()->SGBDgetLigne($req, $id);
 		return static::ajouterObjet($ligne);
@@ -137,8 +137,8 @@ class Admin extends Element{
 	IMPORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
 
 	******************************/
-	public static function champID() {return 'ALogin';}
-	public static function getSELECT() {return 'SELECT ALogin,APwd,ADroit FROM admin';  }
+	public static function champID() {return 'AId';}
+	public static function getSELECT() {return 'SELECT AId,ALogin,APwd,ADroit FROM admin';  }
 
 
 	public static function SQLInsert(array $valeurs){
