@@ -9,9 +9,15 @@
 
 if (isset($_SESSION['InfoEleve'])) {
     echo ('<button  class="btn btn-default" name="Déconnexion" >Déconnexion</button >');
+
+
+
 }else {
   if ((!isset($_POST['Connexion']))&&(!isset($_POST["ConnexionEleve"]))&&(!isset($_POST["ConnexionAdmin"]))&&(!isset($_POST["loginAdmin"]))&&(!isset($_POST["login"]))){
     echo('<button  class="btn btn-default" name="Connexion" >Connexion</button >');
+
+
+
   }
 }
 

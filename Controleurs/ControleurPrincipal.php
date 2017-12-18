@@ -4,7 +4,9 @@ require_once 'Modeles/element.php';
 require_once 'Modeles/pluriel.php';
 
   if(isset($_POST["Déconnexion"])) {
+    //Electeur::PostDateLogoutEleve($login);
     session_destroy();
+    header ('Location:index.php');
   }
 
   //si il un utilisateur est connecter

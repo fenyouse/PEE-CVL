@@ -123,7 +123,6 @@ class Electeur extends Element{
 
 		$eleve = static::ajouterObjet($ligne);
 		static::PostDateCoEleve($login);
-		//post date et heure de la connexion et vérouiller à une seule co par compte
 		return $eleve;
 
 	}
@@ -131,9 +130,22 @@ class Electeur extends Element{
 
 
 	public static function PostDateCoEleve($login){
-		$date = Now();
-		$requete = "INSERT INTO elect (EDateLogin, ELastLogin) VALUES ('".$date."', '".$date."') WHERE ELogin ='".$login."' ";
-		$result = $this->SGBDgetPrepareExecute($requete);
+
+		$date = date('Y-m-d H:i:s');
+		$valeurs = array($date,$date,$login);
+		//var_dump($valeurs);
+		$requete = "UPDATE elect SET EDateLogin =?,ELastLogin= ? WHERE ELogin =? ";
+		$result = SI::getSI()->SGBDexecuteQuery($requete,$valeurs);
+		//var_dump($result);
+		return $result;
+	}
+
+	public static function PostLogoutEleve($login){
+		$date = date('Y-m-d H:i:s');
+		$valeurs = array($date,$login);
+		$requete = "UPDATE elect SET EDateLogout =? WHERE ELogin =? ";
+		$result = SI::getSI()->SGBDexecuteQuery($requete,$valeurs);
+		//var_dump($result);
 		return $result;
 	}
 
@@ -141,7 +153,7 @@ class Electeur extends Element{
 	//à tester
 	public function UpdatePassword($login,$mdp){
 		$requete = "UPDATE elect SET EPwd= '".md5($mdp)."' WHERE ELogin ='".$login."' ";
-		$result = $this->SGBDgetPrepareExecute($requete);
+		$result = SI::getSI()->SGBDgetPrepareExecute($requete);
 
 		return $result;
 	}

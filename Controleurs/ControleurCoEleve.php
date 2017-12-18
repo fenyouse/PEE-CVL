@@ -12,16 +12,10 @@ if(isset($_POST) && !empty($_POST['login']) && !empty($_POST['mdp'])){
   $_SESSION['InfoEleve']=Electeur::AuthentificationEleve($_POST["login"],$_POST["mdp"]);
   if ($_SESSION['InfoEleve']!='') {
     $_SESSION['Menu'] = "ChangeMdp";
-    //http_redirect('../index.php');
+    header ('Location:index.php');
   }
 
 }
 
 require_once 'Vues/ConnexionEleve.php';
-
-
-
-
-
-//require_once 'Vues/ConnexionEleve.php';
 ?>
