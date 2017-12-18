@@ -1,28 +1,24 @@
 <?php
-require_once '../Vues/Tech.php';
-require_once "../Modeles/si.php";
-require_once '../Modeles/element.php';
-require_once '../Modeles/pluriel.php';
-require_once '../Modeles/admin.php';
-
+require_once 'Modeles/admin.php';
+require_once 'Modeles/electeur.php';
 
 //3 formulaires
 	//le Bouton importation de la liste des élèves redirige vers la fonction importation
 	if(isset($_POST['Importer'])){
-		require_once '../Fonctions/importlisteEleve.php';
+		require_once 'Fonctions/importlisteEleve.php';
 	}
 	//le Bouton exportation de la liste des résultats redirige vers la fonction qui traite les resultats du suffrage
 	if(isset($_POST['submitRes'])){
-		require_once '../Fonctions/exportationResultats.php';
+		require_once 'Fonctions/exportationResultats.php';
 	}
 	//le Bouton exportation de la liste des login-élèves redirige vers la fonction importation
 	if(isset($_POST['submitLog'])){
-		require_once '../Fonctions/exportationLogin.php';
+		require_once 'Fonctions/exportationLogin.php';
 	}
 	
 	//le Bouton qui permet de gérer les id et log des admins
 	if(isset($_POST['submitAdmin'])){
-		require_once '../Vues/GestionAdmins.php';
+		require_once 'Vues/GestionAdmins.php';
 		if(isset($_POST['submitModif'])){
 			//code modif
 			$log;
@@ -38,7 +34,8 @@ require_once '../Modeles/admin.php';
 		}
 		if(isset($_POST['submitSupp'])){
 			$log;
-			$TRAV = Admin::SQLDelete(.$log.);
+			$TRAV = Admin::SQLDelete($log);
 		}
 	}
+require_once 'Vues/Tech.php';
 ?>

@@ -52,6 +52,10 @@ class Electeur extends Element{
 	public function getEPrenom(){
 		return $this->getField('EPrenom');
 	}
+	
+	public function getECodeINE(){
+		return $this->getField('ECodeINE');
+	}
 
 	public function getEVote(){
 		return $this->getField('EVote');
@@ -174,9 +178,13 @@ class Electeur extends Element{
 
 	******************************/
 	public static function champID() {return 'EId';}
-	public static function getSELECT() {return 'SELECT EId, ENom, EPrenom,EVote,EPwd,ELogin,EIdDivis,EDateLogin,EAdresseIP,ELastLogin,ESession,EDateLogout,EModif FROM elect';  }
+	public static function getSELECT() {return 'SELECT EId, ENom, EPrenom,ECodeINE,EVote,EPwd,ELogin,EIdDivis,EDateLogin,EAdresseIP,ELastLogin,ESession,EDateLogout,EModif FROM elect';  }
 
 
+	public static function SQLInsert(array $valeurs){
+		$req = 'INSERT INTO elect (EId,ENom, EPrenom,ECodeINE,EPwd,ELogin,EIdDivis,EModif) VALUES(?,?,?,?,?,?,?,?)';
+		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
+	}
 }
 
 class Electeurs extends Pluriel{
