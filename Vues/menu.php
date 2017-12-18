@@ -7,7 +7,7 @@
 
 
 
-if (isset($_SESSION['InfoEleve'])) {
+if (isset($_SESSION['InfoEleve'])||isset($_SESSION['InfoAdmin'])) {
     echo ('<button  class="btn btn-default" name="Déconnexion" >Déconnexion</button >');
 
 
