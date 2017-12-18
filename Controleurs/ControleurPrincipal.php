@@ -1,5 +1,17 @@
 <?php
 
+require_once 'Modeles/element.php';
+require_once 'Modeles/pluriel.php';
+
+  if(isset($_POST["Déconnexion"])) {
+    session_destroy();
+  }
+
+  //si il un utilisateur est connecter
+  if (isset($_SESSION['InfoEleve'])) {
+
+  }
+
   if(isset($_POST["Accueil"])) {
     $_SESSION['Menu']="";
     /*
@@ -51,6 +63,7 @@
     $_SESSION['Menu'] = "ChangeMdp";
     require_once 'Controleurs/ControleurChangeMdp.php';
   }
+
 
   require_once 'Vues/footer.php';
 

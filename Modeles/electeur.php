@@ -1,8 +1,5 @@
 <?php
 //---------- Classe electeur
-require_once 'Modeles/element.php';
-require_once 'Modeles/pluriel.php';
-
 class Electeur extends Element{
 
 	//Singleton de mémorisation des instances
@@ -100,6 +97,55 @@ class Electeur extends Element{
 		}
 		return $this->o_MesElecteurs;
 	}
+
+	public static function TestMdpCrypte ($login){
+
+		$requete =static::getSELECT()." where ELogin ='".$login."'";
+		$ligne = SI::getSI()->SGBDgetuneLigne($requete);
+		//var_dump($ligne);
+		$result = strlen($ligne['EPwd']);
+		//var_dump($result);
+		return $result<6;
+	}
+
+	public static function AuthentificationEleve($login,$mdp){
+
+		//vérifier que l'eleve n'a pas voté et n'est pas deja connecté sinon renvoie null
+		if (static::TestMdpCrypte($login)) {
+			$requete =static::getSELECT()." where ELogin ='".$login."'and EPwd = '".$mdp."'";
+
+		}else {
+			$requete = static::getSELECT()." where Elogin ='".$login."'and EPwd = '".md5($mdp)."'";
+
+		}
+		$ligne = SI::getSI()->SGBDgetuneLigne($requete);
+		if($ligne == null){return null;}
+
+		$eleve = static::ajouterObjet($ligne);
+		static::PostDateCoEleve($login);
+		//post date et heure de la connexion et vérouiller à une seule co par compte
+		return $eleve;
+
+	}
+
+
+
+	public static function PostDateCoEleve($login){
+		$date = Now();
+		$requete = "INSERT INTO elect (EDateLogin, ELastLogin) VALUES ('".$date."', '".$date."') WHERE ELogin ='".$login."' ";
+		$result = $this->SGBDgetPrepareExecute($requete);
+		return $result;
+	}
+
+
+	//à tester
+	public function UpdatePassword($login,$mdp){
+		$requete = "UPDATE elect SET EPwd= '".md5($mdp)."' WHERE ELogin ='".$login."' ";
+		$result = $this->SGBDgetPrepareExecute($requete);
+
+		return $result;
+	}
+
 
 	/******************************
 	IMPORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
