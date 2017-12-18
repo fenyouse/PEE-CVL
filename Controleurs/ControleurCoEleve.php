@@ -16,8 +16,15 @@ if(isset($_POST) && !empty($_POST['login']) && !empty($_POST['mdp'])){
       $electeur= Electeur::mustFind( Electeur::AuthentificationEleve($_POST["login"],$_POST["mdp"])->getEId());
       //var_dump($electeur);
       if ($electeur!=null) {
-        $_SESSION['Menu'] = "ChangeMdp";
-        header ('Location:index.php');
+        $login = $electeur->getELogin();
+        if (!Electeur::TestMdpCrypte($login)){
+          $_SESSION['Menu'] = "ChangeMdp";
+          header ('Location:index.php');
+        }else {
+          $_SESSION['Menu'] = "Accueil";
+          header ('Location:index.php');
+        }
+
       }
   }
 
