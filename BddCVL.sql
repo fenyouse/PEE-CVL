@@ -17,10 +17,7 @@ CREATE TABLE candid (
   CIdBinome varchar(10) NOT NULL,
   CNbV int(5) NOT NULL DEFAULT '0',
   CIdSuffrage varchar(10) NOT NULL,
-  PRIMARY KEY (CId),
-  CONSTRAINT suffrage_info_candid        
-  FOREIGN KEY (CIdSuffrage)           
-  REFERENCES suffrage(SId)
+  PRIMARY KEY (CId)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE elect (
@@ -38,10 +35,7 @@ CREATE TABLE elect (
   ESession varchar(100) DEFAULT NULL,
   EDateLogout datetime DEFAULT NULL,
   EModif int(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (EId),
-  CONSTRAINT elect_info_candid        
-  FOREIGN KEY (EId)           
-  REFERENCES candid(CId)
+  PRIMARY KEY (EId)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE divis (
