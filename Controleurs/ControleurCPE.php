@@ -1,8 +1,8 @@
 <?php
-require_once '../Vues/Cpe.php';
-require_once "../Modeles/si.php";
-require_once '../Modeles/suffrage.php';
 
+
+//
+require_once 'Modeles/suffrage.php';
 
 
 //insertion des données du formulaires Cpe.php
@@ -20,16 +20,11 @@ require_once '../Modeles/suffrage.php';
 			else{
 				//initialise le choix
 				$NbChoix = $_POST['NbChoix'];
-				
 				//insertion suffrage, nouvelle méthode
+			
 				$TRAV = Suffrage::SQLInsert(array($NbChoix,$datedebut,$datefin,$Desc));
 				//echo json_encode($TRAV,JSON_PRETTY_PRINT);
-				//
-				
-				//test insertion suffrage dans bdd
-				//$bdd = new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
-				//$bdd->exec=('INSERT INTO `suffrage`(`SChoix`, `SDateDeb`, `SDateFin`, `SDescription`) VALUES ("'.$NbChoix.'","'.$datedebut.'","'.$datefin.'","'.$Desc.'")');
-				//
+
 				require_once "index.php";
 				$message = "Election enregistrer";
 				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';	
@@ -42,4 +37,5 @@ require_once '../Modeles/suffrage.php';
 			require_once "index.php";
 		}
 	}
+	require_once 'Vues/Cpe.php';
 ?>
