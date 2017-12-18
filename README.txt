@@ -31,7 +31,7 @@ les deux pages gérant l'exportation sous format PDF utilisant le modèle "FDPF"
 
 
 
--"fonts":
+-"fonts":la police de Bootstrap.
 
 
 
