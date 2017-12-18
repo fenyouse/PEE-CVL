@@ -43,9 +43,6 @@ require_once 'Modeles/pluriel.php';
         require_once 'Controleurs/ControleurAccueil.php';
         break;
     case "AccueilCPE":
-            require_once 'Controleurs/ControleurAccueilAdmin.php';
-            break;
-    case "AccueilCPE":
             require_once 'Controleurs/ControleurCPE.php';
             break;
     case "AccueilTECH":
