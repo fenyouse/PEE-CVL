@@ -4,6 +4,8 @@ require_once 'Modeles/element.php';
 require_once 'Modeles/pluriel.php';
 
   if(isset($_POST["Déconnexion"])) {
+    //$login = $_SESSION['InfoEleve']->Electeur->getELogin();
+    //var_dump($login);
     //Electeur::PostDateLogoutEleve($login);
     session_destroy();
     header ('Location:index.php');
@@ -13,18 +15,10 @@ require_once 'Modeles/pluriel.php';
   if (isset($_SESSION['InfoEleve'])) {
 
   }
-
+  //bouton Accueil du Menu
   if(isset($_POST["Accueil"])) {
-    $_SESSION['Menu']="";
-    /*
-    if ($_SESSION['idUser']==null) {
-      require_once 'Controleurs/ControleurAccueilNonConnecter.php';
-    }else {
-    */
-      require_once 'Controleurs/ControleurAccueil.php';
-    /*
-    }
-    */
+    $_SESSION['Menu']="Accueil";
+    require_once 'Controleurs/ControleurAccueil.php';
   }
 
   if (!isset($_SESSION['Menu'])) {
@@ -37,16 +31,16 @@ require_once 'Modeles/pluriel.php';
         require_once 'Vues/MenuCo.php';
         break;
     case "CoAdmin":
-        $_SESSION['Menu'] = "CoAdmin";
         require_once 'Controleurs/ControleurCoAdmin.php';
         break;
     case "CoEleve":
-        $_SESSION['Menu'] = "CoEleve";
         require_once 'Controleurs/ControleurCoEleve.php';
         break;
     case "ChangeMdp":
-        $_SESSION['Menu'] = "ChangeMdp";
         require_once 'Controleurs/ControleurChangeMdp.php';
+        break;
+    case "Accueil":
+        require_once 'Controleurs/ControleurAccueil.php';
         break;
 }
   if(isset($_POST["Connexion"])) {
