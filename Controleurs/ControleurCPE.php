@@ -4,29 +4,30 @@ require_once 'Modeles/electeur.php';
 require_once 'Modeles/candidat.php';
 
 //insertion des données du formulaires Cpe.php
+	//ajout des candidats par suffrage
 	if(isset($_POST['Validercandidat'])){
 		//var_dump(Electeur::mustFind($_POST['IdCand']));
 		//verif si champ vide ou non
 		if($_POST['IdCand']!="" and $_POST['IdBin']!=""){
 			//recherche si les id existe dans la table electeur
 			if(Electeur::mustFind($_POST['IdCand'])== true and Electeur::mustFind($_POST['IdBin'])== true){
-					if(Candidat::mustFind($_POST['IdCand'])!= true){
-							echo $TRAV['pgerror'];
-							var_dump(Candidat::mustFind($_POST['IdCand']));
-							$selection = $_POST['selection'];
-							$idcandid = $_POST['IdCand'];
-							$idbinome = $_POST['IdBin'];
-							$TRAV = Candidat::SQLInsert(array($idcandid,$idbinome,$selection));
-							var_dump($TRAV);
-							//echo json_encode($TRAV,JSON_PRETTY_PRINT);
-							require_once "index.php";
-							$message = "Candidat enregistré !";
-							echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
-					}
-					else{
-						$message = "L'élève est déjà enregistré !";
-						echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
-					}
+				//echo $TRAV['pgerror'];
+				//echo " /////////// ";
+				$selection = $_POST['selection'];
+				$idcandid = $_POST['IdCand'];
+				$idbinome = $_POST['IdBin'];
+				$TRAV = Candidat::SQLInsert(array($idcandid,$idbinome,$selection));
+				//si il y a duplication de la clef primaire alors envoie un message d'erreur, sinon on envois que le traitement est fait
+				if($TRAV['pgerror'] !="23000"){
+				header("Location: " . $_SERVER['REQUEST_URI']);
+				$message = "Candidat enregistré !";
+				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+				exit();
+				}
+				else{
+					$message = "L'élève est déjà enregistré !";
+					echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+				}
 			}
 			else{
 				$message = "Vérifier que l'Id du candidat ou du binôme existe bien !";
@@ -38,6 +39,7 @@ require_once 'Modeles/candidat.php';
 			echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
 		}
 	}
+	//ajout d'un suffrage
 	if(isset($_POST['Valider'])){
 		if($_POST['Desc']!=""){
 			//si il y a une description on compare les dates de début et fin
@@ -57,9 +59,11 @@ require_once 'Modeles/candidat.php';
 				$TRAV = Suffrage::SQLInsert(array($NbChoix,$datedebut,$datefin,$Desc));
 				//echo json_encode($TRAV,JSON_PRETTY_PRINT);
 
-				require_once "index.php";
+				// Redirect la page (empêcher le renvoit du formulaire quand on rafraichit)
+				header("Location: " . $_SERVER['REQUEST_URI']);
 				$message = "Election enregistrer";
 				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';	
+				exit();
 			}
 		}
 		else{
@@ -70,4 +74,5 @@ require_once 'Modeles/candidat.php';
 		}
 	}
 require_once 'Vues/Cpe.php';
+header('location:Vues/Cpe.php');
 ?>

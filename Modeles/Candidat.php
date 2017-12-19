@@ -54,8 +54,11 @@ class Candidat extends Element{
 	public function getCNbV(){
 		return $this->getField('CNbV');
 	}
+	public function getCIdSuffrage(){
+		return $this->getField('CIdSuffrage');
+	}
 	
-	public function getCandidats(){
+	public function getElecteurs(){
 		if($this->o_Meselecteurs == null){
 			$this->o_Meselecteurs = new Electeurs();
 			$this->o_Meselecteurs->remplir('EId="'.$this->getCId().'"',null);
@@ -101,7 +104,6 @@ class Candidat extends Element{
 		$req = 'UPDATE candid SET CId=?, CIdBinome=?, CNbV=?, CIdSuffrage=?,WHERE CId=?';
 		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
 	}
-
 }
 
 class Candidats extends Pluriel{
@@ -120,7 +122,6 @@ class Candidats extends Pluriel{
 		if ($ordre != null){
 			$req.=" ORDER BY $ordre";
 		}
-		
 		//echo $req;
 		
 		//remplir à partir de la requete
@@ -165,6 +166,7 @@ class Candidats extends Pluriel{
 		}
 		echo '</select>';
 	}
+
 	
 }
 ?>

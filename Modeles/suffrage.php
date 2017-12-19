@@ -81,6 +81,15 @@ class Suffrage extends Element{
 		return $this->o_MesCandidats;
 	}
 	
+	public function getCandidatsselect($selection){
+		if($this->o_MesCandidats == null){
+			$this->o_MesCandidats = new Candidats();
+			$this->o_MesCandidats->remplir('CIdSuffrage="'.$selection.'"',null);
+		}
+		return $this->o_MesCandidats;
+	}
+	
+	
 	public function displayRow(){
 		
 		echo '<tr>';
@@ -113,6 +122,8 @@ class Suffrage extends Element{
 		echo '</option>';
 		
 	}
+	
+	
 }
 
 class Suffrages extends Pluriel{
@@ -160,6 +171,7 @@ class Suffrages extends Pluriel{
 	
 	public function displaySelect() {
 		echo '<select name="selection" onChange="demanderDetails(this);">';
+		echo '<option>   </option>';
 		// dire à chaque élément de mon tableau : Afficher le Row
 		foreach ($this->getArray() as $unsuffrage) {
 			$unsuffrage->displayOption();

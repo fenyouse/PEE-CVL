@@ -17,7 +17,7 @@ CREATE TABLE candid (
   CIdBinome varchar(10) NOT NULL,
   CNbV int(5) NOT NULL DEFAULT '0',
   CIdSuffrage int(50) NOT NULL,
-  PRIMARY KEY (CId)
+  PRIMARY KEY (CId,CIdSuffrage)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE elect (

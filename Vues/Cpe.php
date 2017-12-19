@@ -60,7 +60,7 @@ function demanderDetails(objSelect) {
 			<p> Selectionner l'élection à laquelle ils participent : </p>
 			<?php  
 			$lessuffrages = new Suffrages();
-			$lessuffrages->remplir();
+			$lessuffrages->remplir("SDateDeb > NOW()",$order=null);
 			Suffrage::getInstances()->displaySelect();
 			?>
 			<div class="well center-block" style="max-width:500px;margin-top:50px" id="details">
