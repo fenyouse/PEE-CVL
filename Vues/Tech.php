@@ -26,8 +26,46 @@ ini_set("display_errors",0);error_reporting(0);
 <input class="btn btn-default btn-lg btn-block" name="submitLog" type="submit" value="Exporter" /></form>
 <br></br>
 
-<button class="btn btn-default btn-lg btn-block" type="submit" name="submitAdmin" class="btn btn-default"> Gestion des Administrateurs </button>
+<h4>Nouvel élève :</h4>
+<form class="form-inline" method="post" action="index.php">
 
+	<div class="form-group">
+      <label name="EId" class="sr-only" for="InputId">EId</label>
+      <input type="text" class="form-control"  placeholder="EId">
+    </div>
+	<div class="form-group">
+      <label name="Nom" class="sr-only" for="InputNom">Nom</label>
+      <input type="text" class="form-control"  placeholder="Nom">
+    </div>
+	<div class="form-group">
+      <label name="INE" class="sr-only" for="InputINE">INE</label>
+      <input type="text" class="form-control"  placeholder="INE">
+    </div>
+	<div class="form-group">
+      <label name="Prenom" class="sr-only" for="InputPrenom">Prenom</label>
+      <input type="text" class="form-control"  placeholder="Prenom">
+    </div>
+	<div class="form-group">
+      <label name="Login" class="sr-only" for="InputLogin">Login</label>
+      <input type="text" class="form-control"  placeholder="Login">
+    </div>
+    <div class="form-group">
+      <label class="sr-only" for="InputPassword">Mot de passe</label>
+      <input name="mdp" type="password" class="form-control" placeholder="Mot de passe">
+	</div>
+<br></br>
+	<p>Division :
+<?php
+	$LPD = new Divisions();
+	$LPD->remplir();
+	Division::getInstances()->displaySelect("Divis");
+?>
+<br></br></form>
+
+	<input class="btn btn-default btn-lg btn-block" type="submit" value="Valider" name="Valider"class="bouton" />
+ 
+ <br></br>
+ 
 </div>
 </center>
 
