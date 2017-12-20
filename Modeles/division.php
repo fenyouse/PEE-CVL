@@ -1,7 +1,6 @@
 <?php 
 //---------- Classe division
-require_once 'Modeles/element.php';
-require_once 'Modeles/pluriel.php';
+
 
 class Division extends Element{
 
@@ -75,8 +74,15 @@ class Division extends Element{
 
 	******************************/
 	public static function champID() {return 'DCode';}
-	public static function getSELECT() {return 'SELECT DCode  FROM divis';  }	
+	public static function getSELECT() {return 'SELECT DCode FROM divis';  }	
 
+	public function option(){
+		$tmp = $this->getDCode();
+		echo '<option value ='.$tmp.'">';
+		echo $this->getDCode();
+		echo '</option>';
+
+	}
 
 }
 
@@ -117,12 +123,12 @@ class Divisions extends Pluriel{
 		echo '</table>';
 		echo'</center>';
 	}
-	
-	public function SELECT(){
-		echo'<select>';
+
+	public function displaySelect($name){
+		echo'<select style="width:auto" class="form-control" type="Text" required="required" name="'.$name.'">';
 		// dire à chaque élément de mon tableau : afficher le row
-		foreach ($this->getArray() as $unedivis) {
-			$unedivis->option();
+		foreach ($this->getArray() as $unedivision) {
+			$unedivision->option();
 		}
 		echo '</select>';
 	}

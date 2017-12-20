@@ -1,7 +1,6 @@
 <?php 
 //---------- Classe Candidat
-require_once 'Modeles/element.php';
-require_once 'Modeles/pluriel.php';
+
 
 class Candidat extends Element{
 
@@ -33,12 +32,12 @@ class Candidat extends Element{
 		if($tmp!=null) {return $tmp;}
 		//sinon pas trouver; chercher dans la BDD
 		$req = static::getSELECT().' where CId =?';
-		echo "<br/>recherche $id";
+		//echo "<br/>recherche $id";
 		$ligne = SI::getSI()->SGBDgetLigne($req, $id);
 		return static::ajouterObjet($ligne);
 	}
 	
-	private $o_MesProduits;
+	private $o_Meselecteurs;
 	
 	//---------- constructeur : repose sur le constructeur parent
 	protected function __construct($theLigne) {parent::__construct($theLigne);}
@@ -55,28 +54,36 @@ class Candidat extends Element{
 	public function getCNbV(){
 		return $this->getField('CNbV');
 	}
+	public function getCIdSuffrage(){
+		return $this->getField('CIdSuffrage');
+	}
 	
-	public function getCandidats(){
-		if($this->o_MesCandidats == null){
-			$this->o_MesCandidats = new Candidats();
-			$this->o_MesCandidatss->remplir('PDTCId="'.$this->getCId().'"',null);
+	public function getElecteurs(){
+		if($this->o_Meselecteurs == null){
+			$this->o_Meselecteurs = new Electeurs();
+			$this->o_Meselecteurs->remplir('EId="'.$this->getCId().'"',null);
 		}
-		return $this->o_MesCandidats;
+		return $this->o_Meselecteurs;
 	}
 	
 	public function displayRow(){
-		
 		echo '<tr>';
 		echo '<td>'.$this->getCId().'</td>';
 		echo '<td>'.$this->getCIdBinome().'</td>';
 		echo '<td>'.$this->getCNbV().'</td>';
-		//$this->getCandidats()->displayTable();
 		echo '</td>';
 		echo '</tr>';
-	
-		
+
 	}
 	
+	public function displayRow2(){
+		echo '<tr>';
+		echo '<td>'.$this->getCId().'</td>';
+		echo '<td>'.$this->getCIdBinome().'</td>';
+		echo '</td>';
+		echo '</tr>';
+
+	}
 	
 
 	/******************************
@@ -84,9 +91,19 @@ class Candidat extends Element{
 
 	******************************/
 	public static function champID() {return 'CId';}
-	public static function getSELECT() {return 'SELECT CId,CIdBinome,CNbV FROM candid';  }	
+	public static function getSELECT() {return 'SELECT CId,CIdBinome,CNbV,CIdSuffrage FROM candid';  }	
 
-
+	//renregistre le nouveau candidat et son binôme
+	public static function SQLInsert(array $valeurs){
+		$req = 'INSERT INTO candid (CId,CIdBinome,CIdSuffrage) VALUES(?,?,?)';
+		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
+	}
+	
+	//permet de modifier un candidat
+	public static function SQLUpdate(array $valeurs){
+		$req = 'UPDATE candid SET CId=?, CIdBinome=?, CNbV=?, CIdSuffrage=?,WHERE CId=?';
+		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
+	}
 }
 
 class Candidats extends Pluriel{
@@ -105,7 +122,6 @@ class Candidats extends Pluriel{
 		if ($ordre != null){
 			$req.=" ORDER BY $ordre";
 		}
-		
 		//echo $req;
 		
 		//remplir à partir de la requete
@@ -127,6 +143,21 @@ class Candidats extends Pluriel{
 		echo'</center>';
 	}
 	
+	public function displayTable2(){
+		echo'<center>';
+		echo'<table class="table table-striped table-dark" border=1px>';
+		echo'<tr>';
+		echo'<th> Id candidat</th>';
+		echo'<th> Id binôme </th>';
+		echo'</tr>';
+		// dire à chaque élément de mon tableau : afficher le row
+		foreach ($this->getArray() as $uncandid) {
+			$uncandid->displayRow2();
+		}
+		echo '</table>';
+		echo'</center>';
+	}
+	
 	public function SELECT(){
 		echo'<select>';
 		// dire à chaque élément de mon tableau : afficher le row
@@ -135,6 +166,7 @@ class Candidats extends Pluriel{
 		}
 		echo '</select>';
 	}
+
 	
 }
 ?>

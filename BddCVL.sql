@@ -2,7 +2,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 CREATE TABLE suffrage (
-  SId varchar(10) NOT NULL,
+  SId INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   SChoix int(2) NOT NULL DEFAULT '5',
   SDateDeb datetime NOT NULL,
   SDateFin datetime NOT NULL,
@@ -16,8 +16,8 @@ CREATE TABLE candid (
   CId varchar(10) NOT NULL,
   CIdBinome varchar(10) NOT NULL,
   CNbV int(5) NOT NULL DEFAULT '0',
-  CIdSuffrage varchar(10) NOT NULL,
-  PRIMARY KEY (CId)
+  CIdSuffrage int(50) NOT NULL,
+  PRIMARY KEY (CId,CIdSuffrage)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE elect (
@@ -45,7 +45,7 @@ CREATE TABLE divis (
 
 
 CREATE TABLE admin(
-  AId varchar(10) NOT NULL,
+  AId INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   ALogin varchar(20) NOT NULL,
   APwd varchar(50) NOT NULL,
   ADroit varchar(4) NOT NULL,

@@ -118,21 +118,6 @@ class Admin extends Element{
 	}
 
 
-	public function option(){
-		$tmp = $this->getALogin();
-		echo '<option value ='.$tmp.'">';
-		echo $this->getALogin();
-		echo '</option>';
-
-	}
-	public function option2(){
-		$tmp = $this->getALogin();
-		echo '<option value ='.$tmp.'">';
-		echo $this->getADroit();
-		echo '</option>';
-
-	}
-
 	/******************************
 	IMPORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
 
@@ -141,19 +126,7 @@ class Admin extends Element{
 	public static function getSELECT() {return 'SELECT AId,ALogin,APwd,ADroit FROM admin';  }
 
 
-	public static function SQLInsert(array $valeurs){
-		$req = 'INSERT INTO admin (ALogin,APwd,ADroit) VALUES(?,?,?)';
-		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
-	}
-	public static function SQLDelete($ref){
-		$req = 'DELETE FROM admin WHERE ALogin = ?';
-		return SI::getSI()->SGBDexecuteQuery($req,array($ref));
-	}
-
-	public static function SQLUpdate(array $valeurs){
-		$req = 'UPDATE admin SET ALogin=?, APwd=?, PDTPrix=?, ADroit=?,WHERE ALogin=?';
-		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
-	}
+	
 
 
 }
@@ -212,22 +185,6 @@ class Admins extends Pluriel{
 		echo '</td>';
 	}
 
-	public function displaySELECT(){
-		echo'<select name="log">';
-		// dire à chaque élément de mon tableau : afficher le row
-		foreach ($this->getArray() as $unadmin) {
-			$unadmin->option();
-		}
-		echo '</select>';
-	}
-	public function displaySELECT2(){
-		echo'<select>';
-		// dire à chaque élément de mon tableau : afficher le row
-		foreach ($this->getArray() as $unadmin) {
-			$unadmin->option2();
-		}
-		echo '</select>';
-	}
 
 }
 ?>
