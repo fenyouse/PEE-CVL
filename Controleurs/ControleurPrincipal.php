@@ -9,20 +9,35 @@ require_once 'Modeles/electeur.php';
     session_destroy();
     header ('Location:index.php');
   }
-
-  //si il un utilisateur est connecter
-  if (isset($_SESSION['InfoEleve'])) {
-
+  if(isset($_POST["Connexion"])) {
+    //$_SESSION['Menu'] = "MenuCo";
+    require_once 'Vues/MenuCo.php';
   }
-  //bouton Accueil du Menu
-  if(isset($_POST["Accueil"])) {
-    $_SESSION['Menu']="Accueil";
+  if(isset($_POST["ConnexionAdmin"])){
+    $_SESSION['Menu'] = "CoAdmin";
+    require_once 'Controleurs/ControleurCoAdmin.php';
   }
+  if(isset($_POST["ConnexionEleve"])){
+    $_SESSION['Menu'] = "CoEleve";
+    require_once 'Controleurs/ControleurCoEleve.php';
+  }
+  if(isset($_POST["ChangeMdp"])) {
+    $_SESSION['Menu'] = "ChangeMdp";
+    require_once 'Controleurs/ControleurChangeMdp.php';
+  }
+
+
+
 
   if (!isset($_SESSION['Menu'])) {
     $_SESSION['Menu']="";
   }
 
+  //bouton Accueil du Menu
+  if(isset($_POST["Accueil"])) {
+    $_SESSION['Menu']="Accueil";
+  }
+  
   switch ($_SESSION['Menu']) {
     case "MenuCo":
         //$_SESSION['Menu'] = "MenuCo";
@@ -51,22 +66,7 @@ require_once 'Modeles/electeur.php';
             require_once 'Controleurs/ControleurTECH.php';
             break;
 }
-  if(isset($_POST["Connexion"])) {
-    //$_SESSION['Menu'] = "MenuCo";
-    require_once 'Vues/MenuCo.php';
-  }
-  if(isset($_POST["ConnexionAdmin"])){
-    $_SESSION['Menu'] = "CoAdmin";
-    require_once 'Controleurs/ControleurCoAdmin.php';
-  }
-  if(isset($_POST["ConnexionEleve"])){
-    $_SESSION['Menu'] = "CoEleve";
-    require_once 'Controleurs/ControleurCoEleve.php';
-  }
-  if(isset($_POST["ChangeMdp"])) {
-    $_SESSION['Menu'] = "ChangeMdp";
-    require_once 'Controleurs/ControleurChangeMdp.php';
-  }
+
 
 
   require_once 'Vues/footer.php';
