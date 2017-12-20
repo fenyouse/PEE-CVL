@@ -1,5 +1,11 @@
 <div class="well center-block" id="connexionform">
-
+  <?php
+  if ($erreur!="") {
+    echo '<p class="bg-warning">';
+    echo $erreur;
+    echo '</p>';
+  }
+  ?>
   <form class="form-inline" method="post">
     <h3>Connexion Admin</h3>
     <div class="form-group

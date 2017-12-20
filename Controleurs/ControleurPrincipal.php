@@ -2,11 +2,12 @@
 
 require_once 'Modeles/element.php';
 require_once 'Modeles/pluriel.php';
+require_once 'Modeles/electeur.php';
 
   if(isset($_POST["Déconnexion"])) {
     //$login = $_SESSION['InfoEleve']->Electeur->getELogin();
     //var_dump($login);
-    //Electeur::PostDateLogoutEleve($login);
+    Electeur::PostLogoutEleve($_SESSION['InfoEleve']);
     session_destroy();
     header ('Location:index.php');
   }

@@ -36,6 +36,8 @@ if(isset($_POST) && !empty($_POST['loginAdmin']) && !empty($_POST['mdpAdmin'])){
         }
 
     //  }
+  }else {
+    $erreur="Login ou mot de passe incorrect";
   }
 
 }

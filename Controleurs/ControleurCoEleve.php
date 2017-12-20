@@ -17,6 +17,8 @@ if(isset($_POST) && !empty($_POST['login']) && !empty($_POST['mdp'])){
 
       if ($electeur->getEVote()==Null) {
 
+        if (($electeur->getEDateLogin()<date('Y-m-d H:i:s')+1800)||($electeur->getEModif()==0)) {
+
           $_SESSION['InfoEleve'] = $ElecteurTmp->getEId();
 
           //var_dump($electeur);
@@ -29,16 +31,19 @@ if(isset($_POST) && !empty($_POST['login']) && !empty($_POST['mdp'])){
               $_SESSION['Menu'] = "Accueil";
               header ('Location:index.php');
             }
-
           }
+        }else {
+          $erreur = "déja connecté";
+        }
+
+
       }else {
         $erreur = "déja voté";
       }
 
   }else {
-    $erreur="identifiant ou mot de passe incorrect";
+    $erreur="Login ou mot de passe incorrect";
   }
-  var_dump($erreur);
 
 
 

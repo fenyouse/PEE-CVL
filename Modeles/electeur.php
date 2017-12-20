@@ -139,18 +139,18 @@ class Electeur extends Element{
 	public static function PostDateCoEleve($login){
 
 		$date = date('Y-m-d H:i:s');
-		$valeurs = array($date,$date,$login);
+		$valeurs = array($date,$date,'1',$login);
 		//var_dump($valeurs);
-		$requete = "UPDATE elect SET EDateLogin =?,ELastLogin= ? WHERE ELogin =? ";
+		$requete = "UPDATE elect SET EDateLogin =?,ELastLogin= ?,EModif=? WHERE ELogin =? ";
 		$result = SI::getSI()->SGBDexecuteQuery($requete,$valeurs);
 		//var_dump($result);
 		return $result;
 	}
 
-	public static function PostLogoutEleve($login){
+	public static function PostLogoutEleve($id){
 		$date = date('Y-m-d H:i:s');
-		$valeurs = array($date,$login);
-		$requete = "UPDATE elect SET EDateLogout =? WHERE ELogin =? ";
+		$valeurs = array($date,0,$id);
+		$requete = "UPDATE elect SET EDateLogout =?,EModif=? WHERE EId =? ";
 		$result = SI::getSI()->SGBDexecuteQuery($requete,$valeurs);
 		//var_dump($result);
 		return $result;
