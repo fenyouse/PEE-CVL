@@ -5,8 +5,6 @@ require_once 'Modeles/pluriel.php';
 require_once 'Modeles/electeur.php';
 
   if(isset($_POST["Déconnexion"])) {
-    //$login = $_SESSION['InfoEleve']->Electeur->getELogin();
-    //var_dump($login);
     Electeur::PostLogoutEleve($_SESSION['InfoEleve']);
     session_destroy();
     header ('Location:index.php');
@@ -19,7 +17,6 @@ require_once 'Modeles/electeur.php';
   //bouton Accueil du Menu
   if(isset($_POST["Accueil"])) {
     $_SESSION['Menu']="Accueil";
-    require_once 'Controleurs/ControleurAccueil.php';
   }
 
   if (!isset($_SESSION['Menu'])) {
@@ -41,7 +38,11 @@ require_once 'Modeles/electeur.php';
         require_once 'Controleurs/ControleurChangeMdp.php';
         break;
     case "Accueil":
-        require_once 'Controleurs/ControleurAccueil.php';
+        if (isset($_SESSION['InfoEleve'])) {
+          require_once 'Controleurs/ControleurAccueil.php';
+        }else {
+          require_once 'Controleurs/ControleurAcceuilNonConnecter.php';
+        }
         break;
     case "AccueilCPE":
             require_once 'Controleurs/ControleurCPE.php';
