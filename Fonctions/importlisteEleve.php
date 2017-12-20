@@ -2,7 +2,7 @@
 
 extract(filter_input_array(INPUT_POST));
 
-//$db = new PDO('mysql:host=127.0.0.1;dbname=cvl','root','');
+//$db = new PDO('mysql:host=127.0.0.1;dbname=cvl','#','#');
 
 
 $fichier=$_FILES["userfile"]["name"];
@@ -28,7 +28,7 @@ if($type_file =="csv"){
 	$ignore = true ;
 	while(!feof($fp)){
 		$ligne =fgets($fp,4096);
-		
+
 		if (!$ignore) {
 			//on crée un tableau des éléments séparés pas des points virgule
 			$ligne = explode(";",$ligne);
@@ -60,20 +60,19 @@ if($type_file =="csv"){
 				//$req =("INSERT INTO elect( EId,ENom,EPrenom,ECodeINE,EPwd,ELogin,EIdDivis) VALUES('$champ2','$champ4','$champ5','$champ3','$champ8','$champ7','$champ1')");
 				//$result = $db-> query($req);
 			}
-			
-		
+
+
 		}
 		$ignore=false;
-		
+
 	}
 }
 else{
 	exit("Attention ! Le fichier n'est pas en csv, veuillez en importer un nouveau !");
 }
-	
+
 
 //fermeture du fichier
 	fclose($fp);
-	
+
 	?>
-	

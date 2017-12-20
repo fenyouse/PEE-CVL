@@ -10,23 +10,35 @@ if(isset($_POST['login'])){
 if(isset($_POST) && !empty($_POST['login']) && !empty($_POST['mdp'])){
 
   $ElecteurTmp = Electeur::AuthentificationEleve($_POST["login"],$_POST["mdp"]);
+  //var_dump($ElecteurTmp);
   if ($ElecteurTmp!=null) {
-      $_SESSION['InfoEleve'] = $ElecteurTmp->getEId();
 
       $electeur= Electeur::mustFind( Electeur::AuthentificationEleve($_POST["login"],$_POST["mdp"])->getEId());
-      //var_dump($electeur);
-      if ($electeur!=null) {
-        $login = $electeur->getELogin();
-        if (!Electeur::TestMdpCrypte($login)){
-          $_SESSION['Menu'] = "ChangeMdp";
-          header ('Location:index.php');
-        }else {
-          $_SESSION['Menu'] = "Accueil";
-          header ('Location:index.php');
-        }
 
+      if ($electeur->getEVote()==Null) {
+
+          $_SESSION['InfoEleve'] = $ElecteurTmp->getEId();
+
+          //var_dump($electeur);
+          if ($electeur!=null) {
+            $login = $electeur->getELogin();
+            if (!Electeur::TestMdpCrypte($login)){
+              $_SESSION['Menu'] = "ChangeMdp";
+              header ('Location:index.php');
+            }else {
+              $_SESSION['Menu'] = "Accueil";
+              header ('Location:index.php');
+            }
+
+          }
+      }else {
+        $erreur = "déja voté";
       }
+
+  }else {
+    $erreur="identifiant ou mot de passe incorrect";
   }
+  var_dump($erreur);
 
 
 

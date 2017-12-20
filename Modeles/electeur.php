@@ -52,7 +52,7 @@ class Electeur extends Element{
 	public function getEPrenom(){
 		return $this->getField('EPrenom');
 	}
-	
+
 	public function getECodeINE(){
 		return $this->getField('ECodeINE');
 	}
@@ -109,7 +109,7 @@ class Electeur extends Element{
 		//var_dump($ligne);
 		$result = strlen($ligne['EPwd']);
 		//var_dump($result);
-		return $result>6;
+		return $result>8;
 	}
 
 	public static function AuthentificationEleve($login,$mdp){
@@ -122,7 +122,10 @@ class Electeur extends Element{
 			$requete = static::getSELECT()." where ELogin ='".$login."'and EPwd = '".$mdp."'";
 
 		}
+		//var_dump($requete);
 		$ligne = SI::getSI()->SGBDgetuneLigne($requete);
+
+		//var_dump($ligne);
 		if($ligne == null){return null;}
 
 		$eleve = static::ajouterObjet($ligne);
@@ -158,12 +161,12 @@ class Electeur extends Element{
 	public static function UpdatePassword($login,$oldMdp,$newMdp){
 		if (static::TestMdpCrypte($login)) {
 			$valeurs = array(md5($newMdp),$login,md5($oldMdp));
-			var_dump($valeurs);
+			//var_dump($valeurs);
 			$requete = "UPDATE elect SET EPwd= ? WHERE ELogin =? AND EPwd=?";
 			$result = SI::getSI()->SGBDexecuteQuery($requete,$valeurs);
 		}else {
 			$valeurs = array(md5($newMdp),$login,$oldMdp);
-			var_dump($valeurs);
+			//var_dump($valeurs);
 			$requete = "UPDATE elect SET EPwd= ? WHERE ELogin =? AND EPwd=?";
 			$result = SI::getSI()->SGBDexecuteQuery($requete,$valeurs);
 		}

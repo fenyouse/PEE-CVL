@@ -1,4 +1,4 @@
-<?php 
+<?php
 //---------- Classe de base de toutes les classes "METIER"
 abstract class Element {
 
