@@ -32,6 +32,12 @@ ini_set("display_errors",0);error_reporting(0);
 <input class="btn btn-primary btn-lg btn-block" name="submitLog" type="submit" value="Exporter" /></form>
 <br></br>
 
+<!-- tableau affiche les divisions-->
+<?php
+	$LPD = new Divisions();
+	$LPD->remplir();
+	Division::getInstances()->displayTable("Divis2");
+?>
 <h4>Nouvelle division :</h4>
 <form class="form-inline" method="post" action="index.php">
 	<div class="form-group">

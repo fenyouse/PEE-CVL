@@ -49,7 +49,7 @@ class Division extends Element{
 	
 	public function displayRow(){
 		echo '<tr>';
-		echo '<td>'.$this->getDCode().'</td>';
+		echo '<td td align="center">'.$this->getDCode().'</td>';
 		echo '</tr>';
 	}
 	
@@ -112,7 +112,10 @@ class Divisions extends Pluriel{
 	
 	public function displayTable(){
 		echo'<center>';
-		echo'<table border=1px>';
+		echo'<table align="center" class="table" border=1px>';
+		echo'<tr>';
+		echo'<td align=center style="FONT-STYLE:bold >Code Division</td>';
+		echo'</tr>';
 		// dire à chaque élément de mon tableau : afficher le row
 		foreach ($this->getArray() as $unedivis) {
 			$unedivis->displayRow();
