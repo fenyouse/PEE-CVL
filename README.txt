@@ -27,7 +27,7 @@ et enfin celui de l'élève.
 
 -"Fonctions": il y a la page fonction gérant l'importation de la liste d'élève "importlisteEleve",
 
-les deux pages gérant l'exportation sous format PDF utilisant le modèle "FDPF".
+le "répondeurCPE" gérant l'ajax de la page "Cpe.php".
 
 
 
