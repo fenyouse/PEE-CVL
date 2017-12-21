@@ -1,5 +1,12 @@
 <div class="well center-block" id="changeMDP">
   <h3>Changement de mot de passe</h3>
+  <?php
+  if ($erreur!="") {
+    echo '<p class="bg-warning text-center">';
+    echo $erreur;
+    echo '</p>';
+  }
+  ?>
   <form class="form-horizontal" method="post">
     <div class="form-group
     <?php if($erreur!=""){

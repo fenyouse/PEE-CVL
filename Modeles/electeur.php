@@ -65,6 +65,10 @@ class Electeur extends Element{
 		return $this->getField('ELogin');
 	}
 
+	public function getEPwd(){
+		return $this->getField('EPwd');
+	}
+
 	public function getEIdDivis(){
 		return $this->getField('EIdDivis');
 	}

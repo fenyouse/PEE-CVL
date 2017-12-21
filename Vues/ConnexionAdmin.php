@@ -1,7 +1,7 @@
 <div class="well center-block" id="connexionform">
   <?php
   if ($erreur!="") {
-    echo '<p class="bg-warning">';
+    echo '<p class="bg-warning text-center">';
     echo $erreur;
     echo '</p>';
   }

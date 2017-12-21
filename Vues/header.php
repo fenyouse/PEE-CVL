@@ -21,12 +21,10 @@
     <![endif]-->
     <link href="css/MyCSS.css" rel="stylesheet">
   </head>
-  <body background="img/background.jpg">
+  <body >
     <center>
       <h1>Site de vote</h1>
       <img src="img/LogoEiffel3.png" alt="img/LogoEiffel3.png" class="img-thumbnail">
-
-
     </center>
 
 
