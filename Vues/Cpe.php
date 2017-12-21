@@ -70,7 +70,7 @@ function demanderDetails(objSelect) {
 			<input type="text" class="form-control" name="IdBin" id="idBinome" placeholder="Id de son binôme">
 			<br></br>
 			
-			<input class="btn btn-default btn-lg btn-block" type="submit" value="Valider" name="Validercandidat"class="bouton" />
+			<input class="btn btn-primary btn-lg btn-block" type="submit" value="Valider" name="Validercandidat"class="bouton" />
 			<br></br>
 			
 			<h4>Création d'une élection : </h4>
@@ -163,7 +163,7 @@ function demanderDetails(objSelect) {
 			<p>Descritpion de l'élection : </p>
 			<Textarea  type="textera" name="Desc" rows=4 cols=60 wrap=physical></Textarea>
 			<br></br>
-			<input class="btn btn-default btn-lg btn-block" type="submit" value="Valider" name="Valider"class="bouton" />
+			<input class="btn btn-primary btn-lg btn-block" type="submit" value="Valider" name="Valider"class="bouton" />
 			
 		
 		</form>
