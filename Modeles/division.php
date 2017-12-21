@@ -32,12 +32,11 @@ class Division extends Element{
 		if($tmp!=null) {return $tmp;}
 		//sinon pas trouver; chercher dans la BDD
 		$req = static::getSELECT().' where DCode =?';
-		echo "<br/>recherche $id";
+		//echo "<br/>recherche $id";
 		$ligne = SI::getSI()->SGBDgetLigne($req, $id);
 		return static::ajouterObjet($ligne);
 	}
 	
-	private $o_MesDivisions;
 	
 	//---------- constructeur : repose sur le constructeur parent
 	protected function __construct($theLigne) {parent::__construct($theLigne);}
@@ -47,24 +46,11 @@ class Division extends Element{
 		return $this->getField('DCode');
 	}
 	
-
-	
-	public function getDivisions(){
-		if($this->o_MesDivisions == null){
-			$this->o_MesDivisions = new Divisions();
-			$this->o_MesDivisions->remplir('DCode="'.$this->getDCode().'"',null);
-		}
-		return $this->o_MesDivisions;
-	}
 	
 	public function displayRow(){
-		
 		echo '<tr>';
 		echo '<td>'.$this->getDCode().'</td>';
-		//$this->getDivisions()->displayTable();
 		echo '</tr>';
-	
-		
 	}
 	
 	
@@ -82,6 +68,17 @@ class Division extends Element{
 		echo $this->getDCode();
 		echo '</option>';
 
+	}
+	
+
+	public static function SQLInsert(array $valeurs){
+		$req = 'INSERT INTO divis (DCode) VALUES(?)';
+		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
+	}
+	
+	public static function SQLDelete($ref){
+		$req = 'DELETE FROM divis WHERE DCode = ?';
+		return SI::getSI()->SGBDexecuteQuery($req,array($ref));
 	}
 
 }
@@ -126,6 +123,7 @@ class Divisions extends Pluriel{
 
 	public function displaySelect($name){
 		echo'<select style="width:auto" class="form-control" type="Text" required="required" name="'.$name.'">';
+		echo '<option>  </option>';
 		// dire à chaque élément de mon tableau : afficher le row
 		foreach ($this->getArray() as $unedivision) {
 			$unedivision->option();

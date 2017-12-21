@@ -120,9 +120,15 @@ class Suffrage extends Element{
 		echo '<option value="'.$tmp.'">';
 		echo $this->getSDescription();
 		echo '</option>';
-		
 	}
 	
+	public function displayOptionPDF($pdf,$fond) {
+		$pdf->cell(3.5,0.7,$this->getSDateDeb(),1,0,'C',$fond);
+		$pdf->cell(3.5,0.7,$this->getSDateFin(),1,0,'C',$fond);
+		$pdf->cell(2.8,0.7,$this->getSDescription(),1,0,'C',$fond);
+		$pdf->cell(2,0.7,$this->getSBlancs(),1,0,'C',$fond);
+		$pdf->cell(2,0.7,$this->getSNuls(),1,0,'C',$fond);
+	}
 	
 }
 
@@ -169,6 +175,7 @@ class Suffrages extends Pluriel{
 		echo'</center>';
 	}
 	
+	//pour la selection par ajax
 	public function displaySelect() {
 		echo '<select name="selection" onChange="demanderDetails(this);">';
 		echo '<option>   </option>';
@@ -179,9 +186,54 @@ class Suffrages extends Pluriel{
 		echo '</select>';		
 	}
 	
+	//pour récupérer la variable selection, la nommer au désir
+	public function displaySelectSimple($name) {
+		echo '<select style="width:auto" class="form-control" type="Text" required="required" name="'.$name.'">';
+		echo '<option>   </option>';
+		// dire à chaque élément de mon tableau : Afficher le Row
+		foreach ($this->getArray() as $unsuffrage) {
+			$unsuffrage->displayOption();
+		} 
+		echo '</select>';		
+	}
 	
 
-	
-	
+	//affichage sur PDF
+	public function displaySelectPDF($pdf) {
+		//instanciation de l'objet pdf
+		$header0= array('Description','DateDeb','DateFin','Blancs','Nuls');
+		$pdf->SetFont('Arial','B',14);
+		//cration de page
+		$pdf->AddPage();
+		$pdf->SetXY(7,2);
+		//logo
+		$pdf->Cell(5,1,utf8_decode('Les Résultats du Suffrage'));
+		$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
+		$pdf->SetFillColor(96,96,96);
+		$pdf->SetTextColor(255);
+		$pdf->SetXY(3,4);
+		// les entêtes du tableau 
+		$pdf->cell(3.5,1,$header0[0],1,0,'C',1);
+		$pdf->cell(3.5,1,$header0[1],1,0,'C',1);
+		$pdf->cell(2.8,1,$header0[2],1,0,'C',1);
+		$pdf->cell(2,1,$header0[3],1,0,'C',1);
+		$pdf->cell(2,1,$header0[4],1,0,'C',1);
+
+
+		$pdf->SetFillColor(0xdd,0xdd,0xdd);
+		$pdf->SetTextColor(0,0,0);
+		$pdf->SetFont('Arial','',10);
+		$pdf->SetXY(3,$pdf->GetY()+1);
+		$fond=0;
+		
+		
+		foreach ($this->getArray() as $unsuffrage) {
+			$unsuffrage->displayOptionPDF($pdf,$fond);
+			$pdf->SetXY(2.5,$pdf->GetY()+0.7);
+			$fond=!$fond;
+		} 		
+		
+	}
+
 }
 ?>

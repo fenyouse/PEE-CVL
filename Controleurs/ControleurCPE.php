@@ -3,6 +3,7 @@ require_once 'Modeles/suffrage.php';
 require_once 'Modeles/electeur.php';
 require_once 'Modeles/candidat.php';
 
+
 //insertion des données du formulaires Cpe.php
 	//ajout des candidats par suffrage
 	if(isset($_POST['Validercandidat'])){
@@ -19,10 +20,10 @@ require_once 'Modeles/candidat.php';
 				$TRAV = Candidat::SQLInsert(array($idcandid,$idbinome,$selection));
 				//si il y a duplication de la clef primaire alors envoie un message d'erreur, sinon on envois que le traitement est fait
 				if($TRAV['pgerror'] !="23000"){
-				header("Location: " . $_SERVER['REQUEST_URI']);
-				$message = "Candidat enregistré !";
-				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
-				exit();
+					header("Location: " . $_SERVER['REQUEST_URI']);
+					$message = "Candidat enregistré !";
+					echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+					exit();
 				}
 				else{
 					$message = "L'élève est déjà enregistré !";
@@ -55,10 +56,8 @@ require_once 'Modeles/candidat.php';
 				//initialise le choix
 				$NbChoix = $_POST['NbChoix'];
 				//insertion suffrage, nouvelle méthode
-			
 				$TRAV = Suffrage::SQLInsert(array($NbChoix,$datedebut,$datefin,$Desc));
 				//echo json_encode($TRAV,JSON_PRETTY_PRINT);
-
 				// Redirect la page (empêcher le renvoit du formulaire quand on rafraichit)
 				header("Location: " . $_SERVER['REQUEST_URI']);
 				$message = "Election enregistrer";
@@ -74,5 +73,5 @@ require_once 'Modeles/candidat.php';
 		}
 	}
 require_once 'Vues/Cpe.php';
-header('location:Vues/Cpe.php');
+
 ?>

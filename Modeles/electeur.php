@@ -35,7 +35,6 @@ class Electeur extends Element{
 		return static::ajouterObjet($ligne);
 	}
 
-	private $o_MesElecteurs;
 
 	//---------- constructeur : repose sur le constructeur parent
 	protected function __construct($theLigne) {parent::__construct($theLigne);}
@@ -61,6 +60,10 @@ class Electeur extends Element{
 		return $this->getField('EVote');
 	}
 
+	public function getEPwd(){
+		return $this->getField('EPwd');
+	}
+	
 	public function getELogin(){
 		return $this->getField('ELogin');
 	}
@@ -98,13 +101,6 @@ class Electeur extends Element{
 	}
 
 
-	public function getElecteurs(){
-		if($this->o_MesElecteurs == null){
-			$this->o_MesElecteurs = new Electeurs();
-			$this->o_MesElecteurs->remplir('EId="'.$this->getEId().'"',null);
-		}
-		return $this->o_MesElecteurs;
-	}
 	//renvoie true si le mot de passe est cryptée
 	public static function TestMdpCrypte ($login){
 
@@ -192,6 +188,15 @@ class Electeur extends Element{
 		$req = 'INSERT INTO elect (EId,ENom, EPrenom,ECodeINE,EPwd,ELogin,EIdDivis,EModif) VALUES(?,?,?,?,?,?,?,?)';
 		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
 	}
+	
+	
+	public function displayOptionPDFElecteur($pdf,$fond) {
+			$pdf->cell(3,0.7,$this->getEIdDivis(),1,0,'C',$fond);
+			$pdf->cell(5,0.7,$this->getENom(),1,0,'C',$fond);
+			$pdf->cell(3,0.7,$this->getEPrenom(),1,0,'C',$fond);
+			$pdf->cell(2,0.7,$this->getEPwd(),1,0,'C',$fond);
+			$pdf->cell(2,0.7,$this->getELogin(),1,0,'C',$fond);
+	}
 }
 
 class Electeurs extends Pluriel{
@@ -220,6 +225,87 @@ class Electeurs extends Pluriel{
 			$this->doAddObject(Electeur::ajouterObjet($uneLigne));
 		}
 	}
+	
+	//permet de remplir suivant la requête
+	public function remplirAVECRequete($req,$condition=null, $ordre=null) {
+		//ajouter condition si besoin est
+		if ($condition != null) {
+			$req.= " WHERE $condition"; // remplace $condition car guillemet et pas simple quote
+		}
+		if ($ordre != null){
+			$req.=" ORDER BY $ordre";
+		}
+		//echo $req;
+		
+		//remplir à partir de la requete
+		$curseur = SI::getSI()->SGBDgetPrepareExecute($req);
+		//var_dump($curseur);
+		foreach ($curseur as $uneLigne){
+			$this->doAddObject(Electeur::ajouterObjet($uneLigne));
+		}
+	}
+	
+	//affichage sur PDF
+	public function displaySelectPDFElecteur($pdf) {
+		//Titres des colonnes
+		$header= array('Division','Nom','Prenom','Pwd','Login');
+		$pdf->SetFont('Arial','B',14);
+		$pdf->AddPage();
+		$pdf->SetXY(6,2);
+		$pdf->Cell(3, 1,utf8_decode('Identifiants des élèves par division'));
+		$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
+		$pdf->SetFillColor(96,96,96);
+		$pdf->SetTextColor(255,255,255);
+		$pdf->SetXY(2.5,4);
+		$pdf->cell(3,1,$header[0],1,0,'C',1);
+		$pdf->cell(5,1,$header[1],1,0,'C',1);
+		$pdf->cell(3,1,$header[2],1,0,'C',1);
+		$pdf->cell(2,1,$header[3],1,0,'C',1);
+		$pdf->cell(2,1,$header[4],1,0,'C',1);
+		
+		$pdf->SetFillColor(0xdd,0xdd,0xdd);
+		$pdf->SetTextColor(0,0,0);
+		$pdf->SetFont('Arial','',10);
+
+		$pdf->SetXY(2.5,$pdf->GetY()+1);
+		$fond=0;
+		$j=0;
+		$divis = "1EEC";
+		foreach ($this->getArray() as $unelecteur) {
+			$divis2 = $unelecteur->getEIdDivis();
+			if($j >1){
+				if ($divis2 != $divis){
+					$header= array('Division','Nom','Prenom','Pwd','Login');
+					$pdf->SetFont('Arial','B',14);
+					$pdf->AddPage();
+					$pdf->SetXY(6,2);
+					$pdf->Cell(3, 1,utf8_decode('Identifiants des élèves de la "'.$divis2.'"'));
+					$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
+					$pdf->SetFillColor(96,96,96);
+					$pdf->SetTextColor(255,255,255);
+					$pdf->SetXY(2.5,4);
+					$pdf->cell(3,1,$header[0],1,0,'C',1);
+					$pdf->cell(5,1,$header[1],1,0,'C',1);
+					$pdf->cell(3,1,$header[2],1,0,'C',1);
+					$pdf->cell(2,1,$header[3],1,0,'C',1);
+					$pdf->cell(2,1,$header[4],1,0,'C',1);
+					$pdf->SetFillColor(0xdd,0xdd,0xdd);
+					$pdf->SetTextColor(0,0,0);
+					$pdf->SetFont('Arial','',10);
+					$pdf->SetXY(2.5,$pdf->GetY()+1);
+					$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
+			}}
+			$unelecteur->displayOptionPDFElecteur($pdf,$fond);
+			$divis = $unelecteur->getEIdDivis();
+			$pdf->SetXY(2.5,$pdf->GetY()+0.7);
+			$fond=!$fond;
+			$j=$j+1;
+		}
+		
+		
+		
+	}
+
 
 
 

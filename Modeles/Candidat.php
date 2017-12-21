@@ -37,7 +37,7 @@ class Candidat extends Element{
 		return static::ajouterObjet($ligne);
 	}
 	
-	private $o_Meselecteurs;
+	private $o_Myeleve;
 	
 	//---------- constructeur : repose sur le constructeur parent
 	protected function __construct($theLigne) {parent::__construct($theLigne);}
@@ -58,12 +58,11 @@ class Candidat extends Element{
 		return $this->getField('CIdSuffrage');
 	}
 	
-	public function getElecteurs(){
-		if($this->o_Meselecteurs == null){
-			$this->o_Meselecteurs = new Electeurs();
-			$this->o_Meselecteurs->remplir('EId="'.$this->getCId().'"',null);
-		}
-		return $this->o_Meselecteurs;
+	public function getEleve(){
+		if($this->o_Myeleve!=null){return $this->o_Myeleve;}
+			//catégorie non connue
+			$this->o_Myeleve = Electeur::mustFind($this->getCId());
+			return $this->o_Myeleve;
 	}
 	
 	public function displayRow(){
@@ -104,6 +103,38 @@ class Candidat extends Element{
 		$req = 'UPDATE candid SET CId=?, CIdBinome=?, CNbV=?, CIdSuffrage=?,WHERE CId=?';
 		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
 	}
+	
+		//Les candidats
+		//$req="SELECT EIdDivis,ENom,EPrenom,ECodeINE,MAX(CNbV),CIdBinome,EId FROM elect,candid,suffrage where candid.CId = elect.Elogin and CIdSuffrage = "'.$SelectionSuffrage.'" order by ENom;";
+	//binome
+		//"SELECT EIdDivis,ENom,EPrenom,ECodeINE,EId FROM elect where ELogin = '".$binome."';";
+		//
+	
+	//display des résultats du suffrage par candidats
+	public function displayOptionPDFCandidats($pdf,$fond) {
+		$pdf->cell(3,0.7,$this->getCId(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$this->getCIdbinome(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$this->getCNbV(),1,0,'C',$fond);
+	}
+	
+	//display des coordonnées du candidat
+	public function displayOptionPDFElu($pdf,$fond) {
+		$pdf->cell(3,0.7,$this->getEleve()->getEIdDivis(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$this->getEleve()->getEId(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$this->getEleve()->getENom(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$this->getEleve()->getEPrenom(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$this->getEleve()->getECodeINE(),1,0,'C',$fond);
+	}
+	
+	//display des coordonnées du binome
+	public function displayOptionPDFBinome($pdf,$fond) {
+		$pdf->cell(3,0.7,$this->getEleve()->getEIdDivis(),1,0,'C',$fond);
+		$objet = Electeur::mustFind($this->getCIdbinome());
+		$pdf->cell(3,0.7,$objet->getEId(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$objet->getENom(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$objet->getEPrenom(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$objet->getECodeINE(),1,0,'C',$fond);
+	}
 }
 
 class Candidats extends Pluriel{
@@ -117,7 +148,7 @@ class Candidats extends Pluriel{
 		$req = Candidat::getSELECT();
 		//ajouter condition si besoin est
 		if ($condition != null) {
-			$req.= " WHERE $condition"; // remplace $condition car guillemet et pas simple quote
+			$req.=" WHERE $condition"; // remplace $condition car guillemet et pas simple quote
 		}
 		if ($ordre != null){
 			$req.=" ORDER BY $ordre";
@@ -131,6 +162,17 @@ class Candidats extends Pluriel{
 			$this->doAddObject(Candidat::ajouterObjet($uneLigne));
 		}
 	}
+	
+	//permet de remplir suivant la requête
+	public function remplirAVECRequete($req) {	
+		//remplir à partir de la requete
+		$curseur = SI::getSI()->SGBDgetPrepareExecute($req);
+		//var_dump($curseur);
+		foreach ($curseur as $uneLigne){
+			$this->doAddObject(Candidat::ajouterObjet($uneLigne));
+		}
+	}
+	
 	
 	public function displayTable(){
 		echo'<center>';
@@ -166,7 +208,71 @@ class Candidats extends Pluriel{
 		}
 		echo '</select>';
 	}
+	
+	//affichage sur PDF des candidats du suffrage selectionner
+	public function displaySelectPDFCandidats($pdf) {
+		//Titres des colonnes
+		$header2= array('Id Candidats ','Id Binomes','nb Vote');
+		$pdf->SetFont('Arial','B',12);
+		$pdf->SetXY(8,7);
+		$pdf->Cell(5,1, utf8_decode('Candidats et Binômes :'));
+		$pdf->SetFillColor(96,96,96);
+		$pdf->SetTextColor(255,255,255);
+		$pdf->SetXY(6,8);
+		for($i=0;$i<sizeof($header2);$i++)
+			$pdf->cell(3,1,$header2[$i],1,0,'C',1);
 
+		$pdf->SetFillColor(0xdd,0xdd,0xdd);
+		$pdf->SetTextColor(0,0,0);
+		$pdf->SetFont('Arial','',8);
+
+		$pdf->SetXY(6,$pdf->GetY()+1);
+		$fond=0;
+		
+		//les résultats des candidats du suffrage selectionner
+		foreach ($this->getArray() as $descandidat) {
+			$descandidat->displayOptionPDFCandidats($pdf,$fond);
+			$pdf->SetXY(6,$pdf->GetY()+0.7);
+			$fond=!$fond;
+		} 	
+		
+	}
+	
+	
+	//affichage sur PDF du candidat élu
+	public function displaySelectPDFElu($pdf) {
+		//Titres des colonnes
+		$header2= array('Division','Id','Nom','Prenom','INE');
+		$pdf->SetFont('Arial','B',12);
+		$pdf->SetXY(8,18);
+		$pdf->Cell(5,1, utf8_decode('Elu et Binôme :'));
+		$pdf->SetFillColor(96,96,96);
+		$pdf->SetTextColor(255,255,255);
+		$pdf->SetXY(3,20);
+		for($i=0;$i<sizeof($header2);$i++)
+			$pdf->cell(3,1,$header2[$i],1,0,'C',1);
+
+		$pdf->SetFillColor(0xdd,0xdd,0xdd);
+		$pdf->SetTextColor(0,0,0);
+		$pdf->SetFont('Arial','',8);
+
+		$pdf->SetXY(3,$pdf->GetY()+1);
+		$fond=0;
+
+		//le candidat ayant eux le maximum de vote avec ses coordonnées
+		foreach ($this->getArray() as $uncandidat) {
+				$uncandidat->displayOptionPDFElu($pdf,$fond);
+				$pdf->SetXY(3,$pdf->GetY()+0.7);
+				$fond=!$fond;
+		} 
+		//le binome du candidat ayant eux le maximum de vote avec ses coordonnées
+		foreach ($this->getArray() as $uncandidat) {
+				$uncandidat->displayOptionPDFBinome($pdf,$fond);
+				$pdf->SetXY(3,$pdf->GetY()+0.7);
+				$fond=!$fond;
+		} 
+		
+	}
 	
 }
 ?>
