@@ -28,7 +28,7 @@ if(isset($_POST) && !empty($_POST['login']) && !empty($_POST['mdp'])){
               $_SESSION['Menu'] = "ChangeMdp";
               header ('Location:index.php');
             }else {
-              $_SESSION['Menu'] = "Accueil";
+              $_SESSION['Menu']="Vote";
               header ('Location:index.php');
             }
           }

@@ -7,7 +7,7 @@ require_once 'Modeles/electeur.php';
 
 	// newref, newdes, newprix, newstock,  CodeCateg, Oldref
 	function SQLUpdateVoteElec ($idEleve) {
-		$date = time();
+		$date = NOW();
 		$tmp = 'UPDATE elect SET EVote=FROM_UNIXTIME('.$date.') WHERE EId='.$idEleve.';';
 		return SI::getSI()->SGBDgetPrepareExecute($tmp);
 	}

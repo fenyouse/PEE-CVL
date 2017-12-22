@@ -40,14 +40,17 @@ require_once 'Modeles/admin.php';
     $_SESSION['Menu']="";
 
     if (isset($_SESSION['InfoEleve'])) {
+        $_SESSION['Menu']="Vote";
         require_once 'Controleurs/ControleurVote.php';
     }else {
       if (isset($_SESSION['InfoAdmin'])) {
           $admin = Admin::mustFind($_SESSION['InfoAdmin']);
           if ($admin->getADroit()=="TECH") {
+              $_SESSION['Menu']="AccueilTECH";
               require_once 'Controleurs/ControleurTECH.php';
           }else {
               if ($admin->getADroit()=="CPE") {
+                  $_SESSION['Menu']="AccueilCPE";
                   require_once 'Controleurs/ControleurCPE.php';
               }
           }
@@ -81,6 +84,9 @@ require_once 'Modeles/admin.php';
             break;
     case "AccueilTECH":
             require_once 'Controleurs/ControleurTECH.php';
+            break;
+    case "Vote":
+            require_once 'Controleurs/ControleurVote.php';
             break;
 
 

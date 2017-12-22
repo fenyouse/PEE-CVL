@@ -1,8 +1,13 @@
-<div class="well center-block">
+<div class="well center-block text-center">
   <?php
   $lessuffrages = new Suffrages();
   $lessuffrages->remplir("SDateDeb < NOW()",$order=null);
 
-  Suffrage::getInstances()->displayTable();
+  if ($lessuffrages->getNombre()==0) {
+    echo "Il n'y a pas de suffrage en cours";
+  }else {
+    Suffrage::getInstances()->displayTable();
+  }
+
   ?>
 </div>

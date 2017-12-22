@@ -62,12 +62,12 @@ function demanderDetails(objSelect) {
 			echo '</p>';
 		}
 		?>
-		<form method="post" class="form-inline" action="index.php" onsubmit="return confirmation();">>
+		<form method="post" class="form-inline" action="index.php" onsubmit="return confirmation();">
 
-			<h4>Selectionner les Candidats que vous souhaitez élire. : </h4>
+			<h4>Selectionner les candidats que vous souhaitez élire : </h4>
 			<br></br>
 			<?php
-			
+
 
 			//Si un seul suffrage, selectionne le premier element du tableau
 			//pour lequel la date de fin est posterieur a la date actuelle
