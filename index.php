@@ -13,4 +13,5 @@
 
   require_once 'Controleurs/ControleurPrincipal.php';
 
+  require_once 'Vues/footer.php';
 ?>

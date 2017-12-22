@@ -42,16 +42,16 @@ require_once 'Modeles/admin.php';
     if (isset($_SESSION['InfoEleve'])) {
         require_once 'Controleurs/ControleurVote.php';
     }else {
-        if (isset($_SESSION['InfoAdmin'])) {
-            $admin = Admin::mustFind($_SESSION['InfoAdmin']);
-            if ($admin->getADroit()=="TECH") {
-                require_once 'Controleurs/ControleurTECH.php';
-            }else {
-                if ($admin->getADroit()=="CPE") {
-                    require_once 'Controleurs/ControleurCPE.php';
-                }
-            }
-        }else {
+      if (isset($_SESSION['InfoAdmin'])) {
+          $admin = Admin::mustFind($_SESSION['InfoAdmin']);
+          if ($admin->getADroit()=="TECH") {
+              require_once 'Controleurs/ControleurTECH.php';
+          }else {
+              if ($admin->getADroit()=="CPE") {
+                  require_once 'Controleurs/ControleurCPE.php';
+              }
+          }
+      }else {
             require_once 'Controleurs/ControleurAccueil.php';
         }
     }
@@ -76,11 +76,18 @@ require_once 'Modeles/admin.php';
     case "ChangeMdp":
         require_once 'Controleurs/ControleurChangeMdp.php';
         break;
+    case "AccueilCPE":
+            require_once 'Controleurs/ControleurCPE.php';
+            break;
+    case "AccueilTECH":
+            require_once 'Controleurs/ControleurTECH.php';
+            break;
+
 
     }
 
 
 
-  require_once 'Vues/footer.php';
+
 
 ?>

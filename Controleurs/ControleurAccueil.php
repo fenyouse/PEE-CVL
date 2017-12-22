@@ -1,6 +1,6 @@
 <?php
 
-
+require_once 'Modeles/suffrage.php';
 
 
 
