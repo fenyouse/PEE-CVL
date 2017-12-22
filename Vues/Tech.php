@@ -44,6 +44,9 @@ ini_set("display_errors",0);error_reporting(0);
     	$LPD->remplir();
     	Division::getInstances()->displayTable("Divis2");
     ?>
+  </div>
+
+  <div class="well center-block" id="TECH">
     <h4>Nouvelle division :</h4>
     <form class="form-inline" method="post" action="index.php">
     	<div class="form-group">

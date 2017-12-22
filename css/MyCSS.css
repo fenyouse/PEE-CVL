@@ -4,6 +4,9 @@ body {
   background-repeat: repeat;
 
 }
+#TECH{
+  width: 400px;
+}
 #footer{
   position: absolute;
   bottom: 0;
