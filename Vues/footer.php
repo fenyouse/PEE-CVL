@@ -1,9 +1,10 @@
 
-<div class="well center-block"id="footer">
+<!--<div class="well center-block"id="footer">
   <p class="text-center ">Développer par Laurent Lescene, Marie Saphar-cadet et Pierre Vue  </p>
   <p class="text-center ">au CFA de Gustave Eiffel en BTS SIO 2 </p>
 
 </div>
+-->
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
