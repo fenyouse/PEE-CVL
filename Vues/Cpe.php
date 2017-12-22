@@ -161,7 +161,7 @@ function demanderDetails(objSelect) {
 			<br></br>
 			
 			<p>Descritpion de l'élection : </p>
-			<Textarea  type="textera" name="Desc" rows=4 cols=60 wrap=physical></Textarea>
+			<Textarea  type="textera" name="Desc" rows=4 cols=40 wrap=physical></Textarea>
 			<br></br>
 			<input class="btn btn-primary btn-lg btn-block" type="submit" value="Valider" name="Valider"class="bouton" />
 			
