@@ -63,7 +63,7 @@ class Electeur extends Element{
 	public function getEPwd(){
 		return $this->getField('EPwd');
 	}
-	
+
 	public function getELogin(){
 		return $this->getField('ELogin');
 	}
@@ -184,8 +184,8 @@ class Electeur extends Element{
 		$req = 'INSERT INTO elect (EId,ENom, EPrenom,ECodeINE,EPwd,ELogin,EIdDivis,EModif) VALUES(?,?,?,?,?,?,?,?)';
 		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
 	}
-	
-	
+
+
 	public function displayOptionPDFElecteur($pdf,$fond) {
 			$pdf->cell(3,0.7,$this->getEIdDivis(),1,0,'C',$fond);
 			$pdf->cell(5,0.7,$this->getENom(),1,0,'C',$fond);
@@ -221,7 +221,7 @@ class Electeurs extends Pluriel{
 			$this->doAddObject(Electeur::ajouterObjet($uneLigne));
 		}
 	}
-	
+
 	//permet de remplir suivant la requête
 	public function remplirAVECRequete($req,$condition=null, $ordre=null) {
 		//ajouter condition si besoin est
@@ -232,7 +232,7 @@ class Electeurs extends Pluriel{
 			$req.=" ORDER BY $ordre";
 		}
 		//echo $req;
-		
+
 		//remplir à partir de la requete
 		$curseur = SI::getSI()->SGBDgetPrepareExecute($req);
 		//var_dump($curseur);
@@ -240,7 +240,7 @@ class Electeurs extends Pluriel{
 			$this->doAddObject(Electeur::ajouterObjet($uneLigne));
 		}
 	}
-	
+
 	//affichage sur PDF
 	public function displaySelectPDFElecteur($pdf) {
 		//Titres des colonnes
@@ -258,7 +258,7 @@ class Electeurs extends Pluriel{
 		$pdf->cell(3,1,$header[2],1,0,'C',1);
 		$pdf->cell(2,1,$header[3],1,0,'C',1);
 		$pdf->cell(2,1,$header[4],1,0,'C',1);
-		
+
 		$pdf->SetFillColor(0xdd,0xdd,0xdd);
 		$pdf->SetTextColor(0,0,0);
 		$pdf->SetFont('Arial','',10);
@@ -297,9 +297,9 @@ class Electeurs extends Pluriel{
 			$fond=!$fond;
 			$j=$j+1;
 		}
-		
-		
-		
+
+
+
 	}
 
 
