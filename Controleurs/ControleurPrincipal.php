@@ -12,7 +12,7 @@ require_once 'Modeles/admin.php';
   }
   if (isset($_SESSION['InfoEleve'])) {
     $electeur= Electeur::mustFind($_SESSION['InfoEleve']);
-    if ($electeur->getEVote()==Null) {
+    if ($electeur->getEVote()!=Null) {
       Electeur::PostLogoutEleve($_SESSION['InfoEleve']);
       session_destroy();
       header ('Location:index.php');
