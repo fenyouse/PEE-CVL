@@ -257,13 +257,11 @@ class Electeurs extends Pluriel{
 		$pdf->cell(6,1,$header[1],1,0,'C',1);
 		$pdf->cell(3,1,$header[2],1,0,'C',1);
 		$pdf->cell(2,1,$header[3],1,0,'C',1);
-<<<<<<< HEAD
+
 		$pdf->cell(2,1,$header[4],1,0,'C',1);
 
-=======
 		$pdf->cell(3,1,$header[4],1,0,'C',1);
-		
->>>>>>> 5be47b75d742208c9bef08845c1f1d24893f38c3
+
 		$pdf->SetFillColor(0xdd,0xdd,0xdd);
 		$pdf->SetTextColor(0,0,0);
 		$pdf->SetFont('Arial','',10);
