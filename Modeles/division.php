@@ -114,7 +114,7 @@ class Divisions extends Pluriel{
 		echo'<center>';
 		echo'<table align="center" class="table" border=1px>';
 		echo'<tr>';
-		echo'<td align=center style="FONT-STYLE:bold >Code Division</td>';
+		echo'<td align=center><b>Code Division</b></td>';
 		echo'</tr>';
 		// dire à chaque élément de mon tableau : afficher le row
 		foreach ($this->getArray() as $unedivis) {
