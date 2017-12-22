@@ -67,19 +67,17 @@ function demanderDetails(objSelect) {
 			<h4>Selectionner les Candidats que vous souhaitez élire. : </h4>
 			<br></br>
 			<?php
-			require_once 'Modeles/suffrage.php';
-			require_once 'Modeles/Candidat.php';
-			require_once 'Modeles/electeur.php';
+			
 
 			//Si un seul suffrage, selectionne le premier element du tableau
 			//pour lequel la date de fin est posterieur a la date actuelle
 			$lesSuffrage = new Suffrages();
 			$lesSuffrage->remplir("SDateFin > NOW()", null);
-			
+
 			//Affecte aux candidats la valeur de la clé étrangère Suffrage
 			$lesCandidats = new Candidats();
 			$lesCandidats->remplir("CIdSuffrage =".$lesSuffrage->getFirst()->getSId(), null);
-			
+
 			foreach($lesCandidats->getArray() as $unCandid){
 				echo '<input type="checkbox" name="tabCandid[]" value="'.$unCandid->getEleve()->getEId().'">
 				<label for="'.$unCandid->getEleve()->getEId().'">

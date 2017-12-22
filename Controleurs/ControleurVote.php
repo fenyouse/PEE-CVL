@@ -1,7 +1,10 @@
 <?php
-	
+require_once 'Modeles/suffrage.php';
+require_once 'Modeles/Candidat.php';
+require_once 'Modeles/electeur.php';
+
 	$erreur = "";
-	
+
 	// newref, newdes, newprix, newstock,  CodeCateg, Oldref
 	function SQLUpdateVoteElec ($idEleve) {
 		$date = time();
