@@ -6,7 +6,7 @@ require_once 'Modeles/suffrage.php';
 require_once 'Modeles/candidat.php';
 require_once 'FDPF/fpdf.php';
 
-
+$erreur = "";
 	//le Bouton importation de la liste des élèves redirige vers la fonction importation
 	if(isset($_POST['Importer'])){
 		require_once 'Fonctions/importlisteEleve.php';
@@ -31,15 +31,15 @@ require_once 'FDPF/fpdf.php';
 		$req2 = "SELECT CId,MAX(CNbV) FROM candid where CIdSuffrage='".$SelectionSuffrage."';";
 		$LP2->remplirAVECRequete($req2);
 		$LP2->displaySelectPDFElu($pdf);
-		
+
 		//fin de page
 		$pdf->Text(10,27,"Signature du CPE :");
 		$pdf->Text(16,27,utf8_decode("Signature de l'Elu :"));
 		$pdf->output();
 		header("Location: " . $_SERVER['REQUEST_URI']);
 	}
-	
-	//le Bouton exportation de la liste des login-élèves 
+
+	//le Bouton exportation de la liste des login-élèves
 	if(isset($_POST['submitLog'])){
 		//creation d'un pdf
 		$pdf=new FPDF('P','cm','A4');
@@ -48,20 +48,20 @@ require_once 'FDPF/fpdf.php';
 		$req = "SELECT EId,EIdDivis,ENom,EPrenom,EPwd,ELogin FROM elect order by EIdDivis;";
 		$LP->remplirAVECRequete($req);
 		$LP->displaySelectPDFElecteur($pdf);
-		
+
 		//fin de page
 		$pdf->output();
 		header("Location: " . $_SERVER['REQUEST_URI']);
-	
+
 	}
-	
+
 	//le Bouton qui permet de créer un élève
 	if(isset($_POST['Valider'])){
-		
+
 		 if($_POST['EId']!="" and $_POST['Nom']!="" and  $_POST['Prenom']!="" and  $_POST['Login']!="" and  $_POST['mdp']!="" and $_POST['Divis']!=""){
 			if(Electeur::mustFind($_POST['EId'])== false){
-				$message = "L'élève existe déjà !";
-				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+				$erreur = "L'élève existe déjà !";
+				echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
 			}
 			else{
 				$divis = $_POST['Divis'];
@@ -78,18 +78,18 @@ require_once 'FDPF/fpdf.php';
 			}
 		 }
 		 else{
-			$message = "Renseigner bien tout les champs !";
-			echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+			$erreur = "Renseigner bien tout les champs !";
+			echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
 		}
-		
+
 	}
 	//enregistre une nouvelle division
 	if(isset($_POST['ValiderDivis'])){
 		//var_dump($_POST['divisAjout']);
 		if( $_POST['divisAjout']!=""){
 			if(Division::mustFind($_POST['divisAjout'])== false){
-				$message = "La division existe déjà !";
-				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+				$erreur = "La division existe déjà !";
+				echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
 			}
 			else{
 				$divisajout = $_POST['divisAjout'];
@@ -100,8 +100,8 @@ require_once 'FDPF/fpdf.php';
 			}
 		}
 		else{
-			$message = "Saisissez bien une division !";
-			echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+			$erreur = "Saisissez bien une division !";
+			echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
 		}
 	}
 	//suppression d'une division

@@ -4,6 +4,8 @@ require_once 'Modeles/electeur.php';
 require_once 'Modeles/candidat.php';
 
 
+$erreur = "";
+
 //insertion des données du formulaires Cpe.php
 	//ajout des candidats par suffrage
 	if(isset($_POST['Validercandidat'])){
@@ -26,18 +28,18 @@ require_once 'Modeles/candidat.php';
 					exit();
 				}
 				else{
-					$message = "L'élève est déjà enregistré !";
-					echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+					$erreur = "L'élève est déjà enregistré !";
+					echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
 				}
 			}
 			else{
-				$message = "Vérifier que l'Id du candidat ou du binôme existe bien !";
-				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+				$erreur = "Vérifier que l'Id du candidat ou du binôme existe bien !";
+				echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
 			}
 		}
 		else{
-			$message = "Attention ! Il faut saisir les deux Identifiants !";
-			echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+			$erreur = "Attention ! Il faut saisir les deux Identifiants !";
+			echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
 		}
 	}
 	//ajout d'un suffrage
@@ -49,8 +51,8 @@ require_once 'Modeles/candidat.php';
 			$Desc = $_POST['Desc'];
 			// si date de début est plus grande il y a un message d'erreur
 			if(strtotime($datedebut) > strtotime($datefin)){
-				$message = "Attention ! La date de début du suffrage est plus grande que la date de fin !";
-				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+				$erreur = "Attention ! La date de début du suffrage est plus grande que la date de fin !";
+				echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
 			}
 			else{
 				//initialise le choix
@@ -65,8 +67,8 @@ require_once 'Modeles/candidat.php';
 		}
 		else{
 			//message erreur si pas de description
-			$message = "Attention ! Veuillez saisir une description pour l'élection !!";
-			echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+			$erreur = "Attention ! Veuillez saisir une description pour l'élection !!";
+			echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
 			require_once "index.php";
 		}
 	}
