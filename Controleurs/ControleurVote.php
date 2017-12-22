@@ -1,5 +1,7 @@
 <?php
-
+	
+	$erreur = "";
+	
 	// newref, newdes, newprix, newstock,  CodeCateg, Oldref
 	function SQLUpdateVoteElec ($idEleve) {
 		$date = time();
@@ -18,15 +20,14 @@
 		return SI::getSI()->SGBDgetPrepareExecute($tmp);
 	}
 
-	function SQLUpdateSuffrage ($idSuffrage) {
+	function SQLUpdateSuffrageBlanc ($idSuffrage) {
 		$tmp = 'UPDATE suffrage SET SBlanc=SBlanc+1 WHERE SId='.$idSuffrage.';';
 		return SI::getSI()->SGBDgetPrepareExecute($tmp);
 	}
 
-	// newref, newdes, newprix, newstock,  newcodecat
-	function SQLInsert (array $tableau) {
-		$tmp = 'INSERT INTO  produit (PDTReference, PDTDesignation, PDTPrix, PDTStock, PDTIdCAT) VALUES (?, ?, ?, ?, ?)';
-		return SI::getSI()->SGBDexecuteQuery($tmp, $tableau);
+	function SQLUpdateSuffrageNul ($idSuffrage) {
+		$tmp = 'UPDATE suffrage SET SNuls=SNuls+1 WHERE SId='.$idSuffrage.';';
+		return SI::getSI()->SGBDgetPrepareExecute($tmp);
 	}
 
 	if (isset($_POST['tabCandid'])) {

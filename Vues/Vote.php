@@ -55,8 +55,14 @@ function demanderDetails(objSelect) {
 
 <center>
 <div class="well center-block" style="max-width:500px;margin-top:100px">
-
-		<form method="post" class="form-inline" action="index.php">
+		<?php
+		if ($erreur!="") {
+			echo '<p class="bg-warning text-center">';
+			echo $erreur;
+			echo '</p>';
+		}
+		?>
+		<form method="post" class="form-inline" action="index.php" onsubmit="return confirmation();">>
 
 			<h4>Selectionner les Candidats que vous souhaitez élire. : </h4>
 			<br></br>
@@ -69,11 +75,11 @@ function demanderDetails(objSelect) {
 			//pour lequel la date de fin est posterieur a la date actuelle
 			$lesSuffrage = new Suffrages();
 			$lesSuffrage->remplir("SDateFin > NOW()", null);
-
+			
+			//Affecte aux candidats la valeur de la clé étrangère Suffrage
 			$lesCandidats = new Candidats();
-			var_dump($lesSuffrage);
 			$lesCandidats->remplir("CIdSuffrage =".$lesSuffrage->getFirst()->getSId(), null);
-
+			
 			foreach($lesCandidats->getArray() as $unCandid){
 				echo '<input type="checkbox" name="tabCandid[]" value="'.$unCandid->getEleve()->getEId().'">
 				<label for="'.$unCandid->getEleve()->getEId().'">
@@ -94,6 +100,10 @@ function demanderDetails(objSelect) {
 		</form>
 
 <script>
+
+function confirmation(){
+    return confirm("Êtes-vous sur de votre choix de vote ?");
+}
 
 $( document ).ready(function() {
     console.log( "ready!" );
