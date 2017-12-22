@@ -188,10 +188,10 @@ class Electeur extends Element{
 
 	public function displayOptionPDFElecteur($pdf,$fond) {
 			$pdf->cell(3,0.7,$this->getEIdDivis(),1,0,'C',$fond);
-			$pdf->cell(5,0.7,$this->getENom(),1,0,'C',$fond);
+			$pdf->cell(6,0.7,$this->getENom(),1,0,'C',$fond);
 			$pdf->cell(3,0.7,$this->getEPrenom(),1,0,'C',$fond);
 			$pdf->cell(2,0.7,$this->getEPwd(),1,0,'C',$fond);
-			$pdf->cell(2,0.7,$this->getELogin(),1,0,'C',$fond);
+			$pdf->cell(3,0.7,$this->getELogin(),1,0,'C',$fond);
 	}
 }
 
@@ -254,16 +254,21 @@ class Electeurs extends Pluriel{
 		$pdf->SetTextColor(255,255,255);
 		$pdf->SetXY(2.5,4);
 		$pdf->cell(3,1,$header[0],1,0,'C',1);
-		$pdf->cell(5,1,$header[1],1,0,'C',1);
+		$pdf->cell(6,1,$header[1],1,0,'C',1);
 		$pdf->cell(3,1,$header[2],1,0,'C',1);
 		$pdf->cell(2,1,$header[3],1,0,'C',1);
+<<<<<<< HEAD
 		$pdf->cell(2,1,$header[4],1,0,'C',1);
 
+=======
+		$pdf->cell(3,1,$header[4],1,0,'C',1);
+		
+>>>>>>> 5be47b75d742208c9bef08845c1f1d24893f38c3
 		$pdf->SetFillColor(0xdd,0xdd,0xdd);
 		$pdf->SetTextColor(0,0,0);
 		$pdf->SetFont('Arial','',10);
 
-		$pdf->SetXY(2.5,$pdf->GetY()+1);
+		$pdf->SetXY(2,$pdf->GetY()+1);
 		$fond=0;
 		$j=0;
 		$divis = "1EEC";
@@ -275,25 +280,25 @@ class Electeurs extends Pluriel{
 					$pdf->SetFont('Arial','B',14);
 					$pdf->AddPage();
 					$pdf->SetXY(6,2);
-					$pdf->Cell(3, 1,utf8_decode('Identifiants des élèves de la "'.$divis2.'"'));
+					$pdf->Cell(3, 2,utf8_decode('Identifiants des élèves de la "'.$divis2.'"'));
 					$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
 					$pdf->SetFillColor(96,96,96);
 					$pdf->SetTextColor(255,255,255);
-					$pdf->SetXY(2.5,4);
+					$pdf->SetXY(2,4);
 					$pdf->cell(3,1,$header[0],1,0,'C',1);
-					$pdf->cell(5,1,$header[1],1,0,'C',1);
+					$pdf->cell(6,1,$header[1],1,0,'C',1);
 					$pdf->cell(3,1,$header[2],1,0,'C',1);
 					$pdf->cell(2,1,$header[3],1,0,'C',1);
-					$pdf->cell(2,1,$header[4],1,0,'C',1);
+					$pdf->cell(3,1,$header[4],1,0,'C',1);
 					$pdf->SetFillColor(0xdd,0xdd,0xdd);
 					$pdf->SetTextColor(0,0,0);
 					$pdf->SetFont('Arial','',10);
-					$pdf->SetXY(2.5,$pdf->GetY()+1);
+					$pdf->SetXY(2,$pdf->GetY()+1);
 					$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
 			}}
 			$unelecteur->displayOptionPDFElecteur($pdf,$fond);
 			$divis = $unelecteur->getEIdDivis();
-			$pdf->SetXY(2.5,$pdf->GetY()+0.7);
+			$pdf->SetXY(2,$pdf->GetY()+0.7);
 			$fond=!$fond;
 			$j=$j+1;
 		}
