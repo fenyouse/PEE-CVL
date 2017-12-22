@@ -59,7 +59,7 @@ require_once 'Modeles/candidat.php';
 				$TRAV = Suffrage::SQLInsert(array($NbChoix,$datedebut,$datefin,$Desc));
 				//echo json_encode($TRAV,JSON_PRETTY_PRINT);
 				// Redirect la page (empêcher le renvoit du formulaire quand on rafraichit)
-				header("Location: " . $_SERVER['REQUEST_URI']);
+				//header("Location: " . $_SERVER['REQUEST_URI']);
 				$message = "Election enregistrer";
 				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';	
 				exit();
