@@ -39,21 +39,21 @@ class SI {
 		return $work->fetch();
 	}
 
-	
+
 	public function SGBDgetuneLigne($req){
 		$work = $this->SGBDgetPrepare($req);
 		$work->execute();
 		return $work->fetch();
 	}
-	
+
 	public function SGBDexecuteQuery($requete, array $valeurs) {
 		$work = $this->SGBDgetPrepare($requete) ;
-		//echo "$requete<br/>";
+		echo "$requete<br/>";
 		$i=0;
 		foreach ($valeurs as &$v) {
 			$i++;
-			//echo "$i : $v <br/>";
-			$work->bindParam($i, $v); 
+			echo "$i : $v <br/>";
+			$work->bindParam($i, $v);
 		}
 		$R = array();
 		try {
@@ -62,22 +62,22 @@ class SI {
 			if ($tberr[0]=='00000') {
 				$tmp = $work->rowCount();
 				if ($tmp==0) {
-					$R = array(	'pgstatus' => 0, 
-									'pgerror' => 0, 
+					$R = array(	'pgstatus' => 0,
+									'pgerror' => 0,
 									'pgcomment' => 'aucune information modifiée');
 				} else {
-					$R = array(	'pgstatus' => $tmp, 
-									'pgerror' => 0, 
-									'pgcomment' => "l'opération a affecté $tmp occurrence(s)");				
+					$R = array(	'pgstatus' => $tmp,
+									'pgerror' => 0,
+									'pgcomment' => "l'opération a affecté $tmp occurrence(s)");
 				}
 			} else {
-				$R = array(	'pgstatus' => -1, 
-								'pgerror' => $tberr[0], 
+				$R = array(	'pgstatus' => -1,
+								'pgerror' => $tberr[0],
 								'pgcomment' => $tberr[2]);
 			}
 		} catch (Exception $e) {
-				$R = array(	'pgstatus' => -3, 
-								'pgerror' => 0, 
+				$R = array(	'pgstatus' => -3,
+								'pgerror' => 0,
 								'pgcomment' => $e->getMessage());
 		}
 		return $R;

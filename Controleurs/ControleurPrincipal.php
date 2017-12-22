@@ -12,14 +12,14 @@ require_once 'Modeles/admin.php';
   }
   if (isset($_SESSION['InfoEleve'])) {
     $electeur= Electeur::mustFind($_SESSION['InfoEleve']);
-    if ($electeur->getEVote()!=Null) {
+    if ($electeur->getEVote()==Null) {
       Electeur::PostLogoutEleve($_SESSION['InfoEleve']);
       session_destroy();
       header ('Location:index.php');
     }
   }
+
   if(isset($_POST["Connexion"])) {
-    //$_SESSION['Menu'] = "MenuCo";
     require_once 'Vues/MenuCo.php';
   }
   if(isset($_POST["ConnexionAdmin"])){
@@ -35,17 +35,31 @@ require_once 'Modeles/admin.php';
     require_once 'Controleurs/ControleurChangeMdp.php';
   }
 
+  //bouton Accueil du Menu
+  if(isset($_POST["Accueil"])) {
+    $_SESSION['Menu']="";
 
-
+    if (isset($_SESSION['InfoEleve'])) {
+        require_once 'Controleurs/ControleurVote.php';
+    }else {
+        if (isset($_SESSION['InfoAdmin'])) {
+            $admin = Admin::mustFind($_SESSION['InfoAdmin']);
+            if ($admin->getADroit()=="TECH") {
+                require_once 'Controleurs/ControleurTECH.php';
+            }else {
+                if ($admin->getADroit()=="CPE") {
+                    require_once 'Controleurs/ControleurCPE.php';
+                }
+            }
+        }else {
+            require_once 'Controleurs/ControleurAccueil.php';
+        }
+    }
+  }
 
 
   if (!isset($_SESSION['Menu'])) {
     $_SESSION['Menu']="";
-  }
-
-  //bouton Accueil du Menu
-  if(isset($_POST["Accueil"])) {
-    $_SESSION['Menu']="Accueil";
   }
 
   switch ($_SESSION['Menu']) {
@@ -62,29 +76,8 @@ require_once 'Modeles/admin.php';
     case "ChangeMdp":
         require_once 'Controleurs/ControleurChangeMdp.php';
         break;
-    case "Accueil":
-        if (isset($_SESSION['InfoEleve'])) {
-          require_once 'Controleurs/ControleurVote.php';
-        }else {
-          require_once 'Controleurs/ControleurAcceuilNonConnecter.php';
-        }
 
-        if (isset($_SESSION['InfoAdmin'])) {
-          $admin = Admin::mustFind($_SESSION['InfoAdmin']);
-          if ($admin->getADroit()=="TECH") {
-            require_once 'Controleurs/ControleurTECH.php';
-          }else {
-            require_once 'Controleurs/ControleurCPE.php';
-          }
-        }
-        break;
-    case "AccueilCPE":
-            require_once 'Controleurs/ControleurCPE.php';
-            break;
-    case "AccueilTECH":
-            require_once 'Controleurs/ControleurTECH.php';
-            break;
-}
+    }
 
 
 

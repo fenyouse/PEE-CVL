@@ -60,7 +60,7 @@ require_once 'Modeles/candidat.php';
 				//echo json_encode($TRAV,JSON_PRETTY_PRINT);
 				// Redirect la page (empêcher le renvoit du formulaire quand on rafraichit)
 				$message = "Election enregistrer";
-				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';	
+				echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
 			}
 		}
 		else{
