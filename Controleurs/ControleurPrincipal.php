@@ -37,7 +37,6 @@ require_once 'Modeles/admin.php';
 
   //bouton Accueil du Menu
   if(isset($_POST["Accueil"])) {
-    $_SESSION['Menu']="";
 
     if (isset($_SESSION['InfoEleve'])) {
         $_SESSION['Menu']="Vote";
@@ -55,14 +54,15 @@ require_once 'Modeles/admin.php';
               }
           }
       }else {
+            $_SESSION['Menu']="Accueil";
             require_once 'Controleurs/ControleurAccueil.php';
         }
     }
   }
 
-
+  //page par default
   if (!isset($_SESSION['Menu'])) {
-    $_SESSION['Menu']="";
+    $_SESSION['Menu']="Accueil";
   }
 
   switch ($_SESSION['Menu']) {
@@ -88,6 +88,10 @@ require_once 'Modeles/admin.php';
     case "Vote":
             require_once 'Controleurs/ControleurVote.php';
             break;
+    case "Accueil":
+            require_once 'Controleurs/ControleurAccueil.php';
+            break;
+
 
 
     }
