@@ -38,7 +38,7 @@ class Candidat extends Element{
 	}
 	
 	private $o_Myeleve;
-	
+	private $o_Mybinome;
 	//---------- constructeur : repose sur le constructeur parent
 	protected function __construct($theLigne) {parent::__construct($theLigne);}
 	
@@ -63,6 +63,13 @@ class Candidat extends Element{
 			//catégorie non connue
 			$this->o_Myeleve = Electeur::mustFind($this->getCId());
 			return $this->o_Myeleve;
+	}
+	
+	public function getBinome(){
+		if($this->o_Mybinome!=null){return $this->o_Mybinome;}
+			//catégorie non connue
+			$this->o_Mybinome = Electeur::mustFind($this->getCIdBinome());
+			return $this->o_Mybinome;
 	}
 	
 	public function displayRow(){
