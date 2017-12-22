@@ -9,6 +9,14 @@ require_once 'Modeles/electeur.php';
     session_destroy();
     header ('Location:index.php');
   }
+  if (isset($_SESSION['InfoEleve'])) {
+    $electeur= Electeur::mustFind($_SESSION['InfoEleve']);
+    if ($electeur->getEVote()!=Null) {
+      Electeur::PostLogoutEleve($_SESSION['InfoEleve']);
+      session_destroy();
+      header ('Location:index.php');
+    }
+  }
   if(isset($_POST["Connexion"])) {
     //$_SESSION['Menu'] = "MenuCo";
     require_once 'Vues/MenuCo.php';
@@ -29,6 +37,7 @@ require_once 'Modeles/electeur.php';
 
 
 
+
   if (!isset($_SESSION['Menu'])) {
     $_SESSION['Menu']="";
   }
@@ -37,7 +46,7 @@ require_once 'Modeles/electeur.php';
   if(isset($_POST["Accueil"])) {
     $_SESSION['Menu']="Accueil";
   }
-  
+
   switch ($_SESSION['Menu']) {
     case "MenuCo":
         //$_SESSION['Menu'] = "MenuCo";
