@@ -64,7 +64,7 @@ class Division extends Element{
 
 	public function option(){
 		$tmp = $this->getDCode();
-		echo '<option value ='.$tmp.'">';
+		echo '<option value ="'.$tmp.'">';
 		echo $this->getDCode();
 		echo '</option>';
 
