@@ -48,11 +48,11 @@ class SI {
 
 	public function SGBDexecuteQuery($requete, array $valeurs) {
 		$work = $this->SGBDgetPrepare($requete) ;
-		echo "$requete<br/>";
+		//echo "$requete<br/>";
 		$i=0;
 		foreach ($valeurs as &$v) {
 			$i++;
-			echo "$i : $v <br/>";
+			//echo "$i : $v <br/>";
 			$work->bindParam($i, $v);
 		}
 		$R = array();
