@@ -56,21 +56,22 @@ function demanderDetails(objSelect) {
 <center>
 <div class="well center-block" style="max-width:500px;margin-top:100px">
 
-		<form method="post" class="form-inline" action="Controleurs/ControleurVote.php">
+		<form method="post" class="form-inline" action="index.php">
 
 			<h4>Selectionner les Candidats que vous souhaitez élire. : </h4>
 			<br></br>
-			<?php  
+			<?php
 			require_once 'Modeles/suffrage.php';
 			require_once 'Modeles/Candidat.php';
 			require_once 'Modeles/electeur.php';
 
-			//Si un seul suffrage, selectionne le premier element du tableau 
+			//Si un seul suffrage, selectionne le premier element du tableau
 			//pour lequel la date de fin est posterieur a la date actuelle
 			$lesSuffrage = new Suffrages();
 			$lesSuffrage->remplir("SDateFin > NOW()", null);
 
 			$lesCandidats = new Candidats();
+			var_dump($lesSuffrage);
 			$lesCandidats->remplir("CIdSuffrage =".$lesSuffrage->getFirst()->getSId(), null);
 
 			foreach($lesCandidats->getArray() as $unCandid){
@@ -79,7 +80,7 @@ function demanderDetails(objSelect) {
     			'.$unCandid->getEleve()->getEPrenom().' '.$unCandid->getEleve()->getENom().'
  				et '.$unCandid->getBinome()->getEPrenom().' '.$unCandid->getBinome()->getENom().' </label>';
  				echo '</br>';
-			} 
+			}
 			?>
 			<input type="checkbox" name="SBlanc" value="Blanc">
 
@@ -119,4 +120,3 @@ $('input[name="tabCandid[]"]').change(function(){
 
 </div>
 </center>
-

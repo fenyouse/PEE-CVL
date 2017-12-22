@@ -1,5 +1,4 @@
 <?php
-	require_once '../Modeles/si.php';
 
 	// newref, newdes, newprix, newstock,  CodeCateg, Oldref
 	function SQLUpdateVoteElec ($idEleve) {
@@ -23,23 +22,26 @@
 		$tmp = 'UPDATE suffrage SET SBlanc=SBlanc+1 WHERE SId='.$idSuffrage.';';
 		return SI::getSI()->SGBDgetPrepareExecute($tmp);
 	}
-	
+
 	// newref, newdes, newprix, newstock,  newcodecat
 	function SQLInsert (array $tableau) {
 		$tmp = 'INSERT INTO  produit (PDTReference, PDTDesignation, PDTPrix, PDTStock, PDTIdCAT) VALUES (?, ?, ?, ?, ?)';
 		return SI::getSI()->SGBDexecuteQuery($tmp, $tableau);
 	}
 
-	$votes = $_POST['tabCandid'];
-	if(empty($votes)){
-		SQLUpdateSuffrage($_POST['idSuffrage']);
-		SQLUpdateVoteElec($_POST['idElec']);
-	} 
-	else{
-		SQLUpdateVoteElec($_POST['idElec']);
-		SQLUpdateVoteCandid($votes); //N'est pas géré le vote blanc en plus d'autres votes
+	if (isset($_POST['tabCandid'])) {
+		$votes = $_POST['tabCandid'];
+		if(empty($votes)){
+			SQLUpdateSuffrage($_POST['idSuffrage']);
+			SQLUpdateVoteElec($_POST['idElec']);
+		}
+		else{
+			SQLUpdateVoteElec($_POST['idElec']);
+			SQLUpdateVoteCandid($votes); //N'est pas géré le vote blanc en plus d'autres votes
+		}
 	}
-	header('Location:../index.php');
+
+	require_once 'Vues/Vote.php';
 
 
  ?>
