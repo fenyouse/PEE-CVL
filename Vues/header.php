@@ -23,8 +23,10 @@
   </head>
   <body >
     <center>
-      <h1>Site de vote</h1>
-      <img src="img/LogoEiffel3.png" alt="img/LogoEiffel3.png" class="img-thumbnail">
+      <div class="well center-block" id="title">
+        <h1>Site de vote</h1>
+        <img src="img/LogoEiffel3.png" alt="img/LogoEiffel3.png" class="img-thumbnail">
+      </div>
     </center>
 
 

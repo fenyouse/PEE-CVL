@@ -9,7 +9,7 @@
 	//var_dump($MonBeauSI);//montrer l'id de l'objet
 
   //$_SESSION['test']= "".Rand(0,9)."".Rand(0,9)."".Rand(0,9)."".Rand(0,9)."";
-  var_dump($_SESSION);
+  //var_dump($_SESSION);
 
   require_once 'Controleurs/ControleurPrincipal.php';
 
