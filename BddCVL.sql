@@ -6,7 +6,7 @@ CREATE TABLE suffrage (
   SChoix int(2) NOT NULL DEFAULT '5',
   SDateDeb datetime NOT NULL,
   SDateFin datetime NOT NULL,
-  SDescription varchar(40) NOT NULL,
+  SDescription text(256) NOT NULL,
   SBlancs int(4) NOT NULL DEFAULT '0',
   SNuls int(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (SId)
@@ -50,7 +50,7 @@ CREATE TABLE admin(
   APwd varchar(50) NOT NULL,
   ADroit varchar(4) NOT NULL,
   PRIMARY KEY (AId)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;	
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO divis SET DCode='1EEC'; INSERT INTO divis SET DCode='1GCO1'; INSERT INTO divis SET DCode='1GCO2';
 INSERT INTO divis SET DCode='1GGES';INSERT INTO divis SET DCode='1SBA'; INSERT INTO divis SET DCode='1SBB';
