@@ -17,13 +17,13 @@ class Suffrage extends Element{
 		static::$o_INSTANCES->doAddObject($tmp);
 		return $tmp;
 	}
-	
+
 	//publication liste instances
 	public static function getInstances(){
 		if (static::$o_INSTANCES ==null){static::$o_INSTANCES = new Suffrages();}
 		return static::$o_INSTANCES;
 	}
-		
+
 	// doit impérativement trouver la Suffrage ayant pour id le patamètre
 	public static function mustFind($id){
 		if (static::$o_INSTANCES == null){static::$o_INSTANCES = new Suffrages();}
@@ -36,43 +36,43 @@ class Suffrage extends Element{
 		$ligne = SI::getSI()->SGBDgetLigne($req, $id);
 		return static::ajouterObjet($ligne);
 	}
-	
+
 	private $o_MesCandidats;
-	
+
 	//---------- constructeur : repose sur le constructeur parent
 	protected function __construct($theLigne) {parent::__construct($theLigne);}
-	
+
 	//---------- renvoie la valeur du champ spécifié en patamètre
 	public function getSId(){
 		return $this->getField('SId');
 	}
-	
+
 	public function getSChoix(){
 		return $this->getField('SChoix');
 	}
-	
+
 	public function getSDateDeb(){
 		return $this->getField('SDateDeb');
 	}
-	
+
 	public function getSDateFin(){
 		return $this->getField('SDateFin');
 	}
-	
+
 	public function getSDescription(){
 		return $this->getField('SDescription');
 	}
-	
+
 	public function getSBlancs(){
 		return $this->getField('SBlancs');
 	}
-	
+
 	public function getSNuls(){
 		return $this->getField('SNuls');
 	}
-	
 
-	
+
+
 	public function getCandidats(){
 		if($this->o_MesCandidats == null){
 			$this->o_MesCandidats = new Candidats();
@@ -80,7 +80,7 @@ class Suffrage extends Element{
 		}
 		return $this->o_MesCandidats;
 	}
-	
+
 	public function getCandidatsselect($selection){
 		if($this->o_MesCandidats == null){
 			$this->o_MesCandidats = new Candidats();
@@ -88,10 +88,10 @@ class Suffrage extends Element{
 		}
 		return $this->o_MesCandidats;
 	}
-	
-	
+
+
 	public function displayRow(){
-		
+
 		echo '<tr>';
 		echo '<td>'.$this->getSDateDeb().'</td>';
 		echo '<td>'.$this->getSDateFin().'</td>';
@@ -99,15 +99,15 @@ class Suffrage extends Element{
 		echo '</td>';
 		echo '</tr>';
 	}
-	
-	
+
+
 
 	/******************************
 	IMSORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
 
 	******************************/
 	public static function champID() {return 'SId';}
-	public static function getSELECT() {return 'SELECT SId,SChoix,SDateDeb,SDateFin,SDescription,SBlancs,SNuls FROM suffrage';  }	
+	public static function getSELECT() {return 'SELECT SId,SChoix,SDateDeb,SDateFin,SDescription,SBlancs,SNuls FROM suffrage';  }
 
 
 	public static function SQLInsert(array $valeurs){
@@ -121,7 +121,7 @@ class Suffrage extends Element{
 		echo $this->getSDescription();
 		echo '</option>';
 	}
-	
+
 	public function displayOptionPDF($pdf,$fond) {
 		$pdf->cell(3.5,0.7,$this->getSDateDeb(),1,0,'C',$fond);
 		$pdf->cell(3.5,0.7,$this->getSDateFin(),1,0,'C',$fond);
@@ -129,7 +129,7 @@ class Suffrage extends Element{
 		$pdf->cell(2,0.7,$this->getSBlancs(),1,0,'C',$fond);
 		$pdf->cell(2,0.7,$this->getSNuls(),1,0,'C',$fond);
 	}
-	
+
 }
 
 class Suffrages extends Pluriel{
@@ -138,7 +138,7 @@ class Suffrages extends Pluriel{
 	public function __construct(){
 		parent::__construct();
 	}
-	
+
 	public function remplir($condition=null, $ordre=null) {
 		$req = Suffrage::getSELECT();
 		//ajouter condition si besoin est
@@ -148,9 +148,9 @@ class Suffrages extends Pluriel{
 		if ($ordre != null){
 			$req.=" ORDER BY $ordre";
 		}
-		
+
 		//echo $req;
-		
+
 		//remplir à partir de la requete
 		$curseur = SI::getSI()->SGBDgetPrepareExecute($req);
 		//var_dumS($curseur);
@@ -158,7 +158,7 @@ class Suffrages extends Pluriel{
 			$this->doAddObject(Suffrage::ajouterObjet($uneLigne));
 		}
 	}
-	
+
 	public function displayTable(){
 		echo'<center>';
 		echo'<table class="table" border=1Sx>';
@@ -174,7 +174,7 @@ class Suffrages extends Pluriel{
 		echo '</table>';
 		echo'</center>';
 	}
-	
+
 	//pour la selection par ajax
 	public function displaySelect() {
 		echo '<select name="selection" onChange="demanderDetails(this);">';
@@ -182,21 +182,21 @@ class Suffrages extends Pluriel{
 		// dire à chaque élément de mon tableau : Afficher le Row
 		foreach ($this->getArray() as $unsuffrage) {
 			$unsuffrage->displayOption();
-		} 
-		echo '</select>';		
+		}
+		echo '</select>';
 	}
-	
+
 	//pour récupérer la variable selection, la nommer au désir
 	public function displaySelectSimple($name) {
-		echo '<select style="width:auto" class="form-control" type="Text" required="required" name="'.$name.'">';
+		echo '<select class="form-control" type="Text" required="required" name="'.$name.'">';
 		echo '<option>   </option>';
 		// dire à chaque élément de mon tableau : Afficher le Row
 		foreach ($this->getArray() as $unsuffrage) {
 			$unsuffrage->displayOption();
-		} 
-		echo '</select>';		
+		}
+		echo '</select>';
 	}
-	
+
 
 	//affichage sur PDF
 	public function displaySelectPDF($pdf) {
@@ -212,7 +212,7 @@ class Suffrages extends Pluriel{
 		$pdf->SetFillColor(96,96,96);
 		$pdf->SetTextColor(255);
 		$pdf->SetXY(3,4);
-		// les entêtes du tableau 
+		// les entêtes du tableau
 		$pdf->cell(3.5,1,$header0[0],1,0,'C',1);
 		$pdf->cell(3.5,1,$header0[1],1,0,'C',1);
 		$pdf->cell(2.8,1,$header0[2],1,0,'C',1);
@@ -225,14 +225,14 @@ class Suffrages extends Pluriel{
 		$pdf->SetFont('Arial','',10);
 		$pdf->SetXY(3,$pdf->GetY()+1);
 		$fond=0;
-		
-		
+
+
 		foreach ($this->getArray() as $unsuffrage) {
 			$unsuffrage->displayOptionPDF($pdf,$fond);
 			$pdf->SetXY(2.5,$pdf->GetY()+0.7);
 			$fond=!$fond;
-		} 		
-		
+		}
+
 	}
 
 }
