@@ -109,9 +109,9 @@ class Suffrage extends Element{
 
 	//affiche pour feuille pdf, gère les cellules du tableau suffrage
 	public function displayOptionPDF($pdf,$fond) {
+		$pdf->cell(6,0.7,$this->getSDescription(),1,0,'C',$fond);
 		$pdf->cell(3.5,0.7,$this->getSDateDeb(),1,0,'C',$fond);
 		$pdf->cell(3.5,0.7,$this->getSDateFin(),1,0,'C',$fond);
-		$pdf->cell(2.8,0.7,$this->getSDescription(),1,0,'C',$fond);
 		$pdf->cell(2,0.7,$this->getSBlancs(),1,0,'C',$fond);
 		$pdf->cell(2,0.7,$this->getSNuls(),1,0,'C',$fond);
 	}
@@ -204,7 +204,7 @@ class Suffrages extends Pluriel{
 		$pdf->SetFont('Arial','B',14);
 		//cration de page
 		$pdf->AddPage();
-		$pdf->SetXY(7,2);
+		$pdf->SetXY(7,3);
 		//titre
 		$pdf->Cell(5,1,utf8_decode('Les Résultats du Suffrage'));
 		//logo
@@ -212,18 +212,18 @@ class Suffrages extends Pluriel{
 		//gère le style du titre
 		$pdf->SetFillColor(96,96,96);
 		$pdf->SetTextColor(255);
-		$pdf->SetXY(3,4);
+		$pdf->SetXY(2,5);
 		// les entêtes du tableau
-		$pdf->cell(3.5,1,$header0[0],1,0,'C',1);
+		$pdf->cell(6,1,$header0[0],1,0,'C',1);
 		$pdf->cell(3.5,1,$header0[1],1,0,'C',1);
-		$pdf->cell(2.8,1,$header0[2],1,0,'C',1);
+		$pdf->cell(3.5,1,$header0[2],1,0,'C',1);
 		$pdf->cell(2,1,$header0[3],1,0,'C',1);
 		$pdf->cell(2,1,$header0[4],1,0,'C',1);
 		//gère le style du tableau
 		$pdf->SetFillColor(0xdd,0xdd,0xdd);
 		$pdf->SetTextColor(0,0,0);
 		$pdf->SetFont('Arial','',10);
-		$pdf->SetXY(3,$pdf->GetY()+1);
+		$pdf->SetXY(2,$pdf->GetY()+1);
 		$fond=0;
 		//les données du suffrage
 		foreach ($this->getArray() as $unsuffrage) {
