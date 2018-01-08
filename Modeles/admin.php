@@ -90,6 +90,7 @@ class Admin extends Element{
 
 	}
 
+	//affiche
 	public function displayRow(){
 
 		echo '<tr>';
@@ -97,24 +98,6 @@ class Admin extends Element{
 		echo '<td>'.$this->getAPwd().'</td>';
 		echo '<td>'.$this->getADroit().'</td>';
 		echo "</tr>\n";
-
-
-	}
-
-	public function displayRow1() {
-		echo '<tr>';
-		echo '<td>'.$this->getALogin().'</td>';
-		echo '</tr>';
-	}
-	public function displayRow2() {
-		echo '<tr>';
-		echo '<td>'.$this->getAPwd().'</td>';
-		echo '</tr>';
-	}
-	public function displayRow3() {
-		echo '<tr>';
-		echo '<td>'.$this->getADroit().'</td>';
-		echo '</tr>';
 	}
 
 
@@ -124,10 +107,6 @@ class Admin extends Element{
 	******************************/
 	public static function champID() {return 'AId';}
 	public static function getSELECT() {return 'SELECT AId,ALogin,APwd,ADroit FROM admin';  }
-
-
-	
-
 
 }
 
@@ -157,34 +136,6 @@ class Admins extends Pluriel{
 			$this->doAddObject(Admin::ajouterObjet($uneLigne));
 		}
 	}
-
-	public function displayTable(){
-		echo '<td>';
-		echo '<table>';
-		// dire à chaque élément de mon tableau : Afficher le Row
-		foreach ($this->getArray() as $unResultat) {
-			$unResultat->displayRow1();
-		}
-		echo '</table>';
-		echo '</td>';
-		echo '<td>';
-		echo '<table>';
-		// dire à chaque élément de mon tableau : Afficher le Row
-		foreach ($this->getArray() as $unResultat) {
-			$unResultat->displayRow2();
-		}
-		echo '</table>';
-		echo '</td>';
-		echo '<td>';
-		echo '<table>';
-		// dire à chaque élément de mon tableau : Afficher le Row
-		foreach ($this->getArray() as $unResultat) {
-			$unResultat->displayRow3();
-		}
-		echo '</table>';
-		echo '</td>';
-	}
-
 
 }
 ?>

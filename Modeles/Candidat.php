@@ -72,6 +72,7 @@ class Candidat extends Element{
 			return $this->o_Mybinome;
 	}
 	
+	//affiche
 	public function displayRow(){
 		echo '<tr>';
 		echo '<td>'.$this->getCId().'</td>';
@@ -218,24 +219,25 @@ class Candidats extends Pluriel{
 	
 	//affichage sur PDF des candidats du suffrage selectionner
 	public function displaySelectPDFCandidats($pdf) {
-		//Titres des colonnes
+		//les entêtes du tableau
 		$header2= array('Id Candidats ','Id Binomes','nb Vote');
 		$pdf->SetFont('Arial','B',12);
 		$pdf->SetXY(8,7);
+		//titre
 		$pdf->Cell(5,1, utf8_decode('Candidats et Binômes :'));
+		//gère le style du titre
 		$pdf->SetFillColor(96,96,96);
 		$pdf->SetTextColor(255,255,255);
 		$pdf->SetXY(6,8);
+		//gère les placements des cellules par rapport aux colonnes
 		for($i=0;$i<sizeof($header2);$i++)
 			$pdf->cell(3,1,$header2[$i],1,0,'C',1);
-
+		//gère le style du tableau
 		$pdf->SetFillColor(0xdd,0xdd,0xdd);
 		$pdf->SetTextColor(0,0,0);
 		$pdf->SetFont('Arial','',8);
-
 		$pdf->SetXY(6,$pdf->GetY()+1);
 		$fond=0;
-		
 		//les résultats des candidats du suffrage selectionner
 		foreach ($this->getArray() as $descandidat) {
 			$descandidat->displayOptionPDFCandidats($pdf,$fond);
@@ -248,24 +250,25 @@ class Candidats extends Pluriel{
 	
 	//affichage sur PDF du candidat élu
 	public function displaySelectPDFElu($pdf) {
-		//Titres des colonnes
+		//les entêtes du tableau
 		$header2= array('Division','Id','Nom','Prenom','INE');
 		$pdf->SetFont('Arial','B',12);
 		$pdf->SetXY(8,18);
+		//titre
 		$pdf->Cell(5,1, utf8_decode('Elu et Binôme :'));
+		//gère le style du titre
 		$pdf->SetFillColor(96,96,96);
 		$pdf->SetTextColor(255,255,255);
 		$pdf->SetXY(3,20);
+		//gère les placements des cellules par rapport aux colonnes
 		for($i=0;$i<sizeof($header2);$i++)
 			$pdf->cell(3,1,$header2[$i],1,0,'C',1);
-
+		//gère le style du tableau
 		$pdf->SetFillColor(0xdd,0xdd,0xdd);
 		$pdf->SetTextColor(0,0,0);
 		$pdf->SetFont('Arial','',8);
-
 		$pdf->SetXY(3,$pdf->GetY()+1);
 		$fond=0;
-
 		//le candidat ayant eux le maximum de vote avec ses coordonnées
 		foreach ($this->getArray() as $uncandidat) {
 				$uncandidat->displayOptionPDFElu($pdf,$fond);

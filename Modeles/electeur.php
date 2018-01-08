@@ -172,6 +172,16 @@ class Electeur extends Element{
 	}
 
 
+	//affiche
+	//les informations de chaque élève
+	public function displayOptionPDFElecteur($pdf,$fond) {
+		$pdf->cell(3,0.7,$this->getEIdDivis(),1,0,'C',$fond);
+		$pdf->cell(6,0.7,$this->getENom(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$this->getEPrenom(),1,0,'C',$fond);
+		$pdf->cell(2,0.7,$this->getEPwd(),1,0,'C',$fond);
+		$pdf->cell(3,0.7,$this->getELogin(),1,0,'C',$fond);
+	}
+	
 	/******************************
 	IMPORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
 
@@ -185,14 +195,6 @@ class Electeur extends Element{
 		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
 	}
 
-
-	public function displayOptionPDFElecteur($pdf,$fond) {
-			$pdf->cell(3,0.7,$this->getEIdDivis(),1,0,'C',$fond);
-			$pdf->cell(6,0.7,$this->getENom(),1,0,'C',$fond);
-			$pdf->cell(3,0.7,$this->getEPrenom(),1,0,'C',$fond);
-			$pdf->cell(2,0.7,$this->getEPwd(),1,0,'C',$fond);
-			$pdf->cell(3,0.7,$this->getELogin(),1,0,'C',$fond);
-	}
 }
 
 class Electeurs extends Pluriel{
@@ -243,57 +245,73 @@ class Electeurs extends Pluriel{
 
 	//affichage sur PDF
 	public function displaySelectPDFElecteur($pdf) {
-		//Titres des colonnes
+		//les entêtes du tableau
 		$header= array('Division','Nom','Prenom','Pwd','Login');
 		$pdf->SetFont('Arial','B',14);
+		//cration de page
 		$pdf->AddPage();
 		$pdf->SetXY(6,2);
+		//titre
 		$pdf->Cell(3, 1,utf8_decode('Identifiants des élèves par division'));
+		//logo
 		$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
+		//gère le style du titre
 		$pdf->SetFillColor(96,96,96);
 		$pdf->SetTextColor(255,255,255);
 		$pdf->SetXY(2.5,4);
+		//les entêtes du tableau un par un car la lageur est différente
 		$pdf->cell(3,1,$header[0],1,0,'C',1);
 		$pdf->cell(6,1,$header[1],1,0,'C',1);
 		$pdf->cell(3,1,$header[2],1,0,'C',1);
 		$pdf->cell(2,1,$header[3],1,0,'C',1);
-
 		$pdf->cell(2,1,$header[4],1,0,'C',1);
-
 		$pdf->cell(3,1,$header[4],1,0,'C',1);
-
+		//gère le style du tableau
 		$pdf->SetFillColor(0xdd,0xdd,0xdd);
 		$pdf->SetTextColor(0,0,0);
 		$pdf->SetFont('Arial','',10);
-
 		$pdf->SetXY(2,$pdf->GetY()+1);
 		$fond=0;
+		//compteur
 		$j=0;
+		//la première division de la base
 		$divis = "1EEC";
+		//boucle l'affichage et les données par ligne
 		foreach ($this->getArray() as $unelecteur) {
+			//valeur de division pour le titre à chauqe page
 			$divis2 = $unelecteur->getEIdDivis();
+			//si ça a bouclé au moins une fois alors on créer une nouvelle page 
+			//avec un titre contenant la nouvelle division aborder et les données des élèves de celle-ci
 			if($j >1){
 				if ($divis2 != $divis){
+					//les entêtes du tableau
 					$header= array('Division','Nom','Prenom','Pwd','Login');
 					$pdf->SetFont('Arial','B',14);
+					//création de la page
 					$pdf->AddPage();
 					$pdf->SetXY(6,2);
+					//titre
 					$pdf->Cell(3, 2,utf8_decode('Identifiants des élèves de la "'.$divis2.'"'));
+					//logo
 					$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
+					//gère le style du titre
 					$pdf->SetFillColor(96,96,96);
 					$pdf->SetTextColor(255,255,255);
 					$pdf->SetXY(2,4);
+					//les entêtes du tableau un par un car la lageur est différente
 					$pdf->cell(3,1,$header[0],1,0,'C',1);
 					$pdf->cell(6,1,$header[1],1,0,'C',1);
 					$pdf->cell(3,1,$header[2],1,0,'C',1);
 					$pdf->cell(2,1,$header[3],1,0,'C',1);
 					$pdf->cell(3,1,$header[4],1,0,'C',1);
+					//gère le style du tableau
 					$pdf->SetFillColor(0xdd,0xdd,0xdd);
 					$pdf->SetTextColor(0,0,0);
 					$pdf->SetFont('Arial','',10);
 					$pdf->SetXY(2,$pdf->GetY()+1);
 					$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
 			}}
+			//les données des élèves-électeurs
 			$unelecteur->displayOptionPDFElecteur($pdf,$fond);
 			$divis = $unelecteur->getEIdDivis();
 			$pdf->SetXY(2,$pdf->GetY()+0.7);
@@ -301,11 +319,7 @@ class Electeurs extends Pluriel{
 			$j=$j+1;
 		}
 
-
-
 	}
-
-
 
 
 }

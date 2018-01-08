@@ -1,8 +1,10 @@
 <?php
+//Marie
+
+//redirections
 require_once 'Modeles/suffrage.php';
 require_once 'Modeles/electeur.php';
 require_once 'Modeles/candidat.php';
-
 
 $erreur = "";
 

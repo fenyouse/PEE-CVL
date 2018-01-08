@@ -1,19 +1,22 @@
 <?php
+//Marie
 
 extract(filter_input_array(INPUT_POST));
 
 //$db = new PDO('mysql:host=127.0.0.1;dbname=cvl','#','#');
 
-
+//récupère le nom du fichier
 $fichier=$_FILES["userfile"]["name"];
+//récupère son extention
 $type_file = pathinfo($fichier,PATHINFO_EXTENSION);
 
+//vérification de l'extention du fichier
 if($type_file =="csv"){
 	if($fichier){ // ouverture du fichier temporaire
 		$fp = fopen($_FILES["userfile"]["tmp_name"], "r");
 	}
-	else{ //fichier inconnu
-		//message d'erreur
+	else{
+		//message d'erreur si fichier inconnu
 		$message = utf8_decode("- Importation Echouée - ");?>
 		 <p align="center" > <?php echo '<script type="text/javascript">window.alert("'.$message.'");</script>'?> </p>
 		 <p align="center" ><B>Désolé, mais vous n'avez pas specifié de chemin valide...</B></p>
@@ -53,25 +56,17 @@ if($type_file =="csv"){
 			if($champ1!='')
 			{
 				$cpt++;
-				//insertion liste élèves, nouvelle méthode
+				//insertion liste élève
 				$TRAV = Electeur::SQLInsert(array($champ2,$champ4,$champ5,$champ3,$champ8,$champ7,$champ1,0));
-				//echo json_encode($TRAV,JSON_PRETTY_PRINT);
-				//test insertion liste élève dans bdd
-				//$req =("INSERT INTO elect( EId,ENom,EPrenom,ECodeINE,EPwd,ELogin,EIdDivis) VALUES('$champ2','$champ4','$champ5','$champ3','$champ8','$champ7','$champ1')");
-				//$result = $db-> query($req);
 			}
-
-
 		}
 		$ignore=false;
 
 	}
 }
-else{
+else{//message d'erreur si l'extention n'est pas respecter
 	exit("Attention ! Le fichier n'est pas en csv, veuillez en importer un nouveau !");
 }
-
-
 //fermeture du fichier
 	fclose($fp);
 

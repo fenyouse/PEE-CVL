@@ -1,4 +1,5 @@
 ﻿<?php
+//Marie///
 // masque les messages erreurs
 ini_set("display_errors",0);error_reporting(0);
 
@@ -7,7 +8,7 @@ ini_set("display_errors",0);error_reporting(0);
 
 <center>
   <div class="well center-block" id="formblock">
-    <!--message d'erreur
+    <!--message d'erreur, contour en rouge sur le champ de l'erreur
   	<?php
   	if ($erreur!="") {
   		echo '<p class="bg-warning text-center">';
@@ -16,11 +17,12 @@ ini_set("display_errors",0);error_reporting(0);
   	}
   	?>
   -->
-
+	
+	
     <h4>Importation de la Liste des élèves : </h4>
     <p> Veuillez choisir un fichier *.csv : </p>
-
     <form  method="post" enctype="multipart/form-data" action="index.php">
+	<!--Bouton parcourir pour importer le fichier-->
       <input style="padding-bottom:40px" class="form-control" name="userfile" type="file" value="table" />
       <input class="btn btn-primary btn-lg btn-block" name="Importer" type="submit" value="Importer" />
     </form>
@@ -29,6 +31,7 @@ ini_set("display_errors",0);error_reporting(0);
 
     <h4>Exportation des Résultats du suffrage : </h4>
     <form  method="post" action="index.php">
+	<!--Selection du suffrage pour avoir ses resultats dans le pdf-->
     	<p>Suffrage :
     <?php
     	$LPD = new Suffrages();
@@ -59,6 +62,7 @@ ini_set("display_errors",0);error_reporting(0);
     <h4>Nouvelle division :</h4>
     <form class="form-inline" method="post" action="index.php">
     	<div class="form-group
+		<!--message d'erreur-->
         <?php if($erreur!=""){
            echo('has-error');
          }
@@ -76,6 +80,7 @@ ini_set("display_errors",0);error_reporting(0);
     <h4>Suppression d'une division :</h4>
     <form class="form-inline" method="post" action="index.php">
       <p>Division :
+	  <!-- Selection de la division pour suppression-->
     <?php
     	$LPD = new Divisions();
     	$LPD->remplir();
@@ -91,6 +96,7 @@ ini_set("display_errors",0);error_reporting(0);
     <form class="form-inline" method="post" action="index.php">
 
     	<div class="form-group
+		<!--message d'erreur-->
         <?php if($erreur!=""){
            echo('has-error');
          }
@@ -99,6 +105,7 @@ ini_set("display_errors",0);error_reporting(0);
           <input type="text" class="form-control" name="EId" id="EId"  placeholder="EId">
         </div>
     	<div class="form-group
+		<!--message d'erreur-->
         <?php if($erreur!=""){
            echo('has-error');
          }
@@ -107,6 +114,7 @@ ini_set("display_errors",0);error_reporting(0);
           <input type="text" class="form-control" name="Nom" id="Nom"  placeholder="Nom">
         </div>
     	<div class="form-group
+		<!--message d'erreur-->
         <?php if($erreur!=""){
            echo('has-error');
          }
@@ -115,6 +123,7 @@ ini_set("display_errors",0);error_reporting(0);
           <input type="text" class="form-control" name="INE" id="INE" placeholder="INE">
         </div>
     	<div class="form-group
+		<!--message d'erreur-->
         <?php if($erreur!=""){
            echo('has-error');
          }
@@ -123,6 +132,7 @@ ini_set("display_errors",0);error_reporting(0);
           <input type="text" class="form-control" name="Prenom" id="Prenom" placeholder="Prenom">
         </div>
     	<div class="form-group
+		<!--message d'erreur-->
         <?php if($erreur!=""){
            echo('has-error');
          }
@@ -131,6 +141,7 @@ ini_set("display_errors",0);error_reporting(0);
           <input type="text" class="form-control" name="Login" id="login" placeholder="Login">
       </div>
       <div class="form-group
+	  <!--message d'erreur-->
         <?php if($erreur!=""){
            echo('has-error');
          }
@@ -141,6 +152,7 @@ ini_set("display_errors",0);error_reporting(0);
       </br>
       </br>
     	<p>Division :
+		<!-- Selection de la division pour création d'un élève-->
     <?php
     	$LPD = new Divisions();
     	$LPD->remplir();

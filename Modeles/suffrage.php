@@ -89,9 +89,8 @@ class Suffrage extends Element{
 		return $this->o_MesCandidats;
 	}
 
-
+	//affiche 
 	public function displayRow(){
-
 		echo '<tr>';
 		echo '<td>'.$this->getSDateDeb().'</td>';
 		echo '<td>'.$this->getSDateFin().'</td>';
@@ -101,6 +100,21 @@ class Suffrage extends Element{
 	}
 
 
+	public function displayOption() {
+		$tmp = $this->getSId();
+		echo '<option value="'.$tmp.'">';
+		echo $this->getSDescription();
+		echo '</option>';
+	}
+
+	//affiche pour feuille pdf, gère les cellules du tableau suffrage
+	public function displayOptionPDF($pdf,$fond) {
+		$pdf->cell(3.5,0.7,$this->getSDateDeb(),1,0,'C',$fond);
+		$pdf->cell(3.5,0.7,$this->getSDateFin(),1,0,'C',$fond);
+		$pdf->cell(2.8,0.7,$this->getSDescription(),1,0,'C',$fond);
+		$pdf->cell(2,0.7,$this->getSBlancs(),1,0,'C',$fond);
+		$pdf->cell(2,0.7,$this->getSNuls(),1,0,'C',$fond);
+	}
 
 	/******************************
 	IMSORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
@@ -113,21 +127,6 @@ class Suffrage extends Element{
 	public static function SQLInsert(array $valeurs){
 		$req = 'INSERT INTO suffrage (SChoix,SDateDeb,SDateFin,SDescription) VALUES(?,?,?,?)';
 		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
-	}
-
-	public function displayOption() {
-		$tmp = $this->getSId();
-		echo '<option value="'.$tmp.'">';
-		echo $this->getSDescription();
-		echo '</option>';
-	}
-
-	public function displayOptionPDF($pdf,$fond) {
-		$pdf->cell(3.5,0.7,$this->getSDateDeb(),1,0,'C',$fond);
-		$pdf->cell(3.5,0.7,$this->getSDateFin(),1,0,'C',$fond);
-		$pdf->cell(2.8,0.7,$this->getSDescription(),1,0,'C',$fond);
-		$pdf->cell(2,0.7,$this->getSBlancs(),1,0,'C',$fond);
-		$pdf->cell(2,0.7,$this->getSNuls(),1,0,'C',$fond);
 	}
 
 }
@@ -200,15 +199,17 @@ class Suffrages extends Pluriel{
 
 	//affichage sur PDF
 	public function displaySelectPDF($pdf) {
-		//instanciation de l'objet pdf
+		//les entêtes du tableau
 		$header0= array('Description','DateDeb','DateFin','Blancs','Nuls');
 		$pdf->SetFont('Arial','B',14);
 		//cration de page
 		$pdf->AddPage();
 		$pdf->SetXY(7,2);
-		//logo
+		//titre
 		$pdf->Cell(5,1,utf8_decode('Les Résultats du Suffrage'));
+		//logo
 		$pdf->Image('img/Gustave_Eiffel_logo.png',18.5,0.2,2,4,'PNG');
+		//gère le style du titre
 		$pdf->SetFillColor(96,96,96);
 		$pdf->SetTextColor(255);
 		$pdf->SetXY(3,4);
@@ -218,15 +219,13 @@ class Suffrages extends Pluriel{
 		$pdf->cell(2.8,1,$header0[2],1,0,'C',1);
 		$pdf->cell(2,1,$header0[3],1,0,'C',1);
 		$pdf->cell(2,1,$header0[4],1,0,'C',1);
-
-
+		//gère le style du tableau
 		$pdf->SetFillColor(0xdd,0xdd,0xdd);
 		$pdf->SetTextColor(0,0,0);
 		$pdf->SetFont('Arial','',10);
 		$pdf->SetXY(3,$pdf->GetY()+1);
 		$fond=0;
-
-
+		//les données du suffrage
 		foreach ($this->getArray() as $unsuffrage) {
 			$unsuffrage->displayOptionPDF($pdf,$fond);
 			$pdf->SetXY(2.5,$pdf->GetY()+0.7);

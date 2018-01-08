@@ -46,22 +46,13 @@ class Division extends Element{
 		return $this->getField('DCode');
 	}
 	
-	
+	//affiche
 	public function displayRow(){
 		echo '<tr>';
 		echo '<td td align="center">'.$this->getDCode().'</td>';
 		echo '</tr>';
 	}
 	
-	
-
-	/******************************
-	IMPORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
-
-	******************************/
-	public static function champID() {return 'DCode';}
-	public static function getSELECT() {return 'SELECT DCode FROM divis';  }	
-
 	public function option(){
 		$tmp = $this->getDCode();
 		echo '<option value ="'.$tmp.'">';
@@ -70,6 +61,13 @@ class Division extends Element{
 
 	}
 	
+
+	/******************************
+	IMPORTANT : 	toute classe dérivée non abstraite doit avoir le code pour
+
+	******************************/
+	public static function champID() {return 'DCode';}
+	public static function getSELECT() {return 'SELECT DCode FROM divis';  }	
 
 	public static function SQLInsert(array $valeurs){
 		$req = 'INSERT INTO divis (DCode) VALUES(?)';
