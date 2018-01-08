@@ -297,7 +297,7 @@ class Electeurs extends Pluriel{
 					$pdf->SetFillColor(96,96,96);
 					$pdf->SetTextColor(255,255,255);
 					//pas la même valeur que la hauteur du premier tableau car sinon le logo déborde dessus
-					$pdf->SetXY(2.5,4);
+					$pdf->SetXY(2,5);
 					//les entêtes du tableau un par un car la lageur est différente
 					$pdf->cell(3,1,$header[0],1,0,'C',1);
 					$pdf->cell(6,1,$header[1],1,0,'C',1);

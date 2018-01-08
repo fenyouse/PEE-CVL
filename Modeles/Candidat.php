@@ -137,6 +137,7 @@ class Candidat extends Element{
 	//display des coordonnées du binome
 	public function displayOptionPDFBinome($pdf,$fond) {
 		$pdf->cell(3,0.7,$this->getEleve()->getEIdDivis(),1,0,'C',$fond);
+		//recherche des coordonnées du binôme dans la table électeur
 		$objet = Electeur::mustFind($this->getCIdbinome());
 		$pdf->cell(3,0.7,$objet->getEId(),1,0,'C',$fond);
 		$pdf->cell(3,0.7,$objet->getENom(),1,0,'C',$fond);

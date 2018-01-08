@@ -109,7 +109,7 @@ class Suffrage extends Element{
 
 	//affiche pour feuille pdf, gère les cellules du tableau suffrage
 	public function displayOptionPDF($pdf,$fond) {
-		$pdf->cell(6,0.7,$this->getSDescription(),1,0,'C',$fond);
+		$pdf->cell(6,0.7,utf8_decode($this->getSDescription()),1,0,'C',$fond);
 		$pdf->cell(3.5,0.7,$this->getSDateDeb(),1,0,'C',$fond);
 		$pdf->cell(3.5,0.7,$this->getSDateFin(),1,0,'C',$fond);
 		$pdf->cell(2,0.7,$this->getSBlancs(),1,0,'C',$fond);
