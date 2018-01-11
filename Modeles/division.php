@@ -82,9 +82,9 @@ class Division extends Element{
 		return SI::getSI()->SGBDexecuteQuery($req,$valeurs);
 	}
 	
-	public static function SQLDelete($ref){
+	public static function SQLDelete($valeur){
 		$req = 'DELETE FROM divis WHERE DCode = ?';
-		return SI::getSI()->SGBDexecuteQuery($req,array($ref));
+		return SI::getSI()->SGBDexecuteQuery($req,array($valeur));
 	}
 
 }
