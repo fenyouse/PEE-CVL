@@ -37,13 +37,21 @@ class Division extends Element{
 		return static::ajouterObjet($ligne);
 	}
 	
-	
+	private $o_MesElecteurs;
 	//---------- constructeur : repose sur le constructeur parent
 	protected function __construct($theLigne) {parent::__construct($theLigne);}
 	
 	//---------- renvoie la valeur du champ spécifié en paramètre
 	public function getDCode(){
 		return $this->getField('DCode');
+	}
+	
+	public function getElecteurs(){
+		if($this->o_MesElecteurs == null){
+			$this->o_MesElecteurs = new Electeurs();
+			$this->o_MesElecteurs->remplir('EIdDivis="'.$this->getDCode().'"',null);
+		}
+		return $this->o_MesElecteurs;
 	}
 	
 	//affiche
